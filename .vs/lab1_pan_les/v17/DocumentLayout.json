@@ -1,0 +1,171 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab1_pan_les\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|solutionrelative:lab1_pan_les\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab1_pan_les\\pages\\querry.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|solutionrelative:lab1_pan_les\\pages\\querry.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab1_pan_les\\pages\\querry.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|solutionrelative:lab1_pan_les\\pages\\querry.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab1_pan_les\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|solutionrelative:lab1_pan_les\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab1_pan_les\\pages\\shared\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|solutionrelative:lab1_pan_les\\pages\\shared\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab1_pan_les\\pages\\lubie_placki.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|solutionrelative:lab1_pan_les\\pages\\lubie_placki.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab1_pan_les\\pages\\lubie_placki.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|solutionrelative:lab1_pan_les\\pages\\lubie_placki.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab1_pan_les\\pages\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|solutionrelative:lab1_pan_les\\pages\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab1_pan_les\\pages\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F2978124-03C7-4B6E-ACCC-32F268B33AD5}|lab1_pan_les\\lab1_pan_les.csproj|solutionrelative:lab1_pan_les\\pages\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "querry.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\querry.cshtml.cs",
+              "RelativeDocumentMoniker": "lab1_pan_les\\Pages\\querry.cshtml.cs",
+              "ToolTip": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\querry.cshtml.cs",
+              "RelativeToolTip": "lab1_pan_les\\Pages\\querry.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-09T19:52:43.293Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "querry.cshtml",
+              "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\querry.cshtml",
+              "RelativeDocumentMoniker": "lab1_pan_les\\Pages\\querry.cshtml",
+              "ToolTip": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\querry.cshtml",
+              "RelativeToolTip": "lab1_pan_les\\Pages\\querry.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-09T19:52:21.484Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_ValidationScriptsPartial.cshtml",
+              "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\Shared\\_ValidationScriptsPartial.cshtml",
+              "RelativeDocumentMoniker": "lab1_pan_les\\Pages\\Shared\\_ValidationScriptsPartial.cshtml",
+              "ToolTip": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\Shared\\_ValidationScriptsPartial.cshtml",
+              "RelativeToolTip": "lab1_pan_les\\Pages\\Shared\\_ValidationScriptsPartial.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-09T19:48:18.118Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "lubie_placki.cshtml",
+              "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\lubie_placki.cshtml",
+              "RelativeDocumentMoniker": "lab1_pan_les\\Pages\\lubie_placki.cshtml",
+              "ToolTip": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\lubie_placki.cshtml",
+              "RelativeToolTip": "lab1_pan_les\\Pages\\lubie_placki.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-09T19:47:06.082Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "lubie_placki.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\lubie_placki.cshtml.cs",
+              "RelativeDocumentMoniker": "lab1_pan_les\\Pages\\lubie_placki.cshtml.cs",
+              "ToolTip": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\lubie_placki.cshtml.cs",
+              "RelativeToolTip": "lab1_pan_les\\Pages\\lubie_placki.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-09T19:45:01.562Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\Index.cshtml.cs",
+              "RelativeDocumentMoniker": "lab1_pan_les\\Pages\\Index.cshtml.cs",
+              "ToolTip": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\Index.cshtml.cs",
+              "RelativeToolTip": "lab1_pan_les\\Pages\\Index.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-09T19:40:48.091Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\Index.cshtml",
+              "RelativeDocumentMoniker": "lab1_pan_les\\Pages\\Index.cshtml",
+              "ToolTip": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\Index.cshtml",
+              "RelativeToolTip": "lab1_pan_les\\Pages\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-09T19:40:36.922Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Error.cshtml",
+              "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\Error.cshtml",
+              "RelativeDocumentMoniker": "lab1_pan_les\\Pages\\Error.cshtml",
+              "ToolTip": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\Error.cshtml",
+              "RelativeToolTip": "lab1_pan_les\\Pages\\Error.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-09T19:39:31.045Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "lab1_pan_les\\Pages\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "lab1_pan_les\\Pages\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAADIAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-09T19:36:47.154Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

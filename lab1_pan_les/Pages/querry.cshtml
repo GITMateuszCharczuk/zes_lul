@@ -1,0 +1,33 @@
+﻿@page
+@model querry
+@{
+}
+
+<div class="bg-secondary bg-opacity-10 py-2 mb-5">
+    <div class="container">
+        <h1>Simple jQuery Interaction</h1>
+    </div>
+</div>
+
+<div>
+    <div class="container">
+        <p id="textToChange">This is some static text that will change on button click.</p>
+        <button id="changeTextButton" class="btn btn-primary">Change Text</button>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#changeTextButton').click(function() {
+                $('#textToChange').text('The text has been changed by jQuery!').css({
+                    'color': 'green',
+                    'font-weight': 'bold',
+                    'font-size': '20px'
+                });
+
+                $(this).text('Text Changed!');
+            });
+        });
+    </script>
+}
