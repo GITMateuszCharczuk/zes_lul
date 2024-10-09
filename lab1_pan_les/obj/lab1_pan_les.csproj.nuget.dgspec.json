@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mateu\\source\\repos\\lab1_pan_les\\lab1_pan_les\\lab1_pan_les.csproj": {}
+    "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\lab1_pan_les.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mateu\\source\\repos\\lab1_pan_les\\lab1_pan_les\\lab1_pan_les.csproj": {
+    "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\lab1_pan_les.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mateu\\source\\repos\\lab1_pan_les\\lab1_pan_les\\lab1_pan_les.csproj",
+        "projectUniqueName": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\lab1_pan_les.csproj",
         "projectName": "lab1_pan_les",
-        "projectPath": "C:\\Users\\mateu\\source\\repos\\lab1_pan_les\\lab1_pan_les\\lab1_pan_les.csproj",
-        "packagesPath": "C:\\Users\\mateu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mateu\\source\\repos\\lab1_pan_les\\lab1_pan_les\\obj\\",
+        "projectPath": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\lab1_pan_les.csproj",
+        "packagesPath": "C:\\Users\\testo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab1_pan_les\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\mateu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\testo\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -64,7 +64,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

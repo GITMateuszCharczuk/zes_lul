@@ -18,8 +18,8 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\testo\Documents\GitHub\zes_lul\lab1_pan_les
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/testo/Documents/GitHub/zes_lul/lab1_pan_les/Pages/Add_blog.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkX2Jsb2cuY3NodG1s
+[C:/Users/testo/Documents/GitHub/zes_lul/lab1_pan_les/Pages/add_blog.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRkX2Jsb2cuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/testo/Documents/GitHub/zes_lul/lab1_pan_les/Pages/Error.cshtml]
