@@ -9,51 +9,51 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = lab1_pan_les
 build_property.RootNamespace = lab1_pan_les
-build_property.ProjectDir = C:\Users\testo\Documents\GitHub\zes_lul\lab1_pan_les\
+build_property.ProjectDir = C:\Users\mateu\Documents\GitHub\zes_lul\lab1_pan_les\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\testo\Documents\GitHub\zes_lul\lab1_pan_les
+build_property.MSBuildProjectDirectory = C:\Users\mateu\Documents\GitHub\zes_lul\lab1_pan_les
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/testo/Documents/GitHub/zes_lul/lab1_pan_les/Pages/Add_blog.cshtml]
+[C:/Users/mateu/Documents/GitHub/zes_lul/lab1_pan_les/Pages/Add_blog.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkX2Jsb2cuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/testo/Documents/GitHub/zes_lul/lab1_pan_les/Pages/Error.cshtml]
+[C:/Users/mateu/Documents/GitHub/zes_lul/lab1_pan_les/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/testo/Documents/GitHub/zes_lul/lab1_pan_les/Pages/Index.cshtml]
+[C:/Users/mateu/Documents/GitHub/zes_lul/lab1_pan_les/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/testo/Documents/GitHub/zes_lul/lab1_pan_les/Pages/lubie_placki.cshtml]
+[C:/Users/mateu/Documents/GitHub/zes_lul/lab1_pan_les/Pages/lubie_placki.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcbHViaWVfcGxhY2tpLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/testo/Documents/GitHub/zes_lul/lab1_pan_les/Pages/Privacy.cshtml]
+[C:/Users/mateu/Documents/GitHub/zes_lul/lab1_pan_les/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/testo/Documents/GitHub/zes_lul/lab1_pan_les/Pages/querry.cshtml]
+[C:/Users/mateu/Documents/GitHub/zes_lul/lab1_pan_les/Pages/querry.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccXVlcnJ5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/testo/Documents/GitHub/zes_lul/lab1_pan_les/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/mateu/Documents/GitHub/zes_lul/lab1_pan_les/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/testo/Documents/GitHub/zes_lul/lab1_pan_les/Pages/_ViewImports.cshtml]
+[C:/Users/mateu/Documents/GitHub/zes_lul/lab1_pan_les/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/testo/Documents/GitHub/zes_lul/lab1_pan_les/Pages/_ViewStart.cshtml]
+[C:/Users/mateu/Documents/GitHub/zes_lul/lab1_pan_les/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/testo/Documents/GitHub/zes_lul/lab1_pan_les/Pages/Shared/_Layout.cshtml]
+[C:/Users/mateu/Documents/GitHub/zes_lul/lab1_pan_les/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-8762rwnuvk
