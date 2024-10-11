@@ -1,0 +1,30 @@
+﻿@model lab2_pan_les.Models.CalculatorModel
+
+@{
+    ViewData["Title"] = "Kalkulator";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Prosty Kalkulator</h1>
+
+    <form asp-action="Index" method="post">
+        <div class="form-group">
+            <label for="Number1">Liczba 1:</label>
+            <input type="number" class="form-control" id="Number1" name="Number1" asp-for="Number1" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Number2">Liczba 2:</label>
+            <input type="number" class="form-control" id="Number2" name="Number2" asp-for="Number2" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Dodaj</button>
+    </form>
+
+    @if (Model.Result.HasValue)
+    {
+        <div class="alert alert-success mt-3">
+            Wynik: @Model.Result
+        </div>
+    }
+</div>
