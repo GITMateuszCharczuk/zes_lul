@@ -1,0 +1,43 @@
+﻿@page
+@model AjaxModel
+@{
+    Layout = null;
+}
+
+<h2>Simple AJAX Form</h2>
+
+<form id="ajaxForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" />
+
+    <button type="submit">Submit</button>
+</form>
+
+<div id="resultMessage"></div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#ajaxForm').submit(function (event) {
+                event.preventDefault(); // Prevent form from submitting normally
+
+                $.ajax({
+                    url: '@Url.Page("Ajax")',  // Ensure the correct URL
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $('#resultMessage').html('Form submitted successfully!');
+                        console.log('Success:', response);  // For debugging
+                    },
+                    error: function (xhr, status, error) {
+                        $('#resultMessage').html('Error submitting form: ' + error);
+                        console.log('Error:', error);  // For debugging
+                    }
+                });
+            });
+        });
+    </script>
+}
