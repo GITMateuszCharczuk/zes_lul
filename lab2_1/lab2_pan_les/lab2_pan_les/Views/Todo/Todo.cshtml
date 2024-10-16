@@ -1,0 +1,109 @@
+﻿@model List<lab2_pan_les.Models.TodoModel>
+@{
+    ViewData["Title"] = "ToDoList";
+}
+
+<h2>TODO List</h2>
+
+<!-- Form to add new tasks -->
+<form asp-action="Add" method="post">
+    <input type="text" name="task" placeholder="New task" />
+    <button type="submit">Add Task</button>
+</form>
+
+<!-- Display the TODO list -->
+<ul>
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <li>
+            @if (Model[i].IsCompleted)
+            {
+                <s>@Model[i].Task</s>
+            }
+            else
+            {
+                @Model[i].Task
+            }
+
+            <!-- Button to mark a task as completed -->
+            @if (!Model[i].IsCompleted)
+            {
+                <form asp-action="Complete" method="post" style="display:inline;">
+                    <input type="hidden" name="index" value="@i" />
+                    <button type="submit">Complete</button>
+                </form>
+            }
+
+            <!-- Button to remove a task -->
+            <form asp-action="Remove" method="post" style="display:inline;">
+                <input type="hidden" name="index" value="@i" />
+                <button type="submit">Remove</button>
+            </form>
+        </li>
+    }
+</ul>
+
+<h3>Local Storage TODO List</h3>
+
+<form id="addTaskForm">
+    <input type="text" id="newTask" placeholder="Enter a task" />
+    <button type="submit">Add Task</button>
+</form>
+
+<ul id="localTodoList"></ul>
+
+@section Scripts {
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let todoList = JSON.parse(localStorage.getItem('todoList')) || [];
+        const todoContainer = document.getElementById('localTodoList');
+
+        function renderTodoList() {
+            todoContainer.innerHTML = '';
+            todoList.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = item.task + ' ' +
+                    (item.isCompleted ? '<s>Completed</s>' :
+                        '<button onclick="completeTask(' + index + ')">Complete</button>') +
+                    ' <button onclick="removeTask(' + index + ')">Remove</button>' +
+                    ' <button onclick="editTask(' + index + ')">Edit</button>';
+                todoContainer.appendChild(li);
+            });
+        }
+
+        document.getElementById('addTaskForm').onsubmit = function (e) {
+            e.preventDefault();
+            const newTask = document.getElementById('newTask').value;
+            todoList.push({ task: newTask, isCompleted: false });
+            localStorage.setItem('todoList', JSON.stringify(todoList));
+            renderTodoList();
+        };
+
+        window.completeTask = function (index) {
+            todoList[index].isCompleted = true;
+            localStorage.setItem('todoList', JSON.stringify(todoList));
+            renderTodoList();
+        };
+
+        window.removeTask = function (index) {
+            todoList.splice(index, 1);
+            localStorage.setItem('todoList', JSON.stringify(todoList));
+            renderTodoList();
+        };
+
+        // New: Edit task functionality
+        window.editTask = function (index) {
+            const newTaskValue = prompt("Edit your task:", todoList[index].task);
+            if (newTaskValue !== null && newTaskValue.trim() !== "") {
+                todoList[index].task = newTaskValue;
+                localStorage.setItem('todoList', JSON.stringify(todoList));
+                renderTodoList();
+            }
+        };
+
+        renderTodoList();
+    });
+</script>
+}
+
+
