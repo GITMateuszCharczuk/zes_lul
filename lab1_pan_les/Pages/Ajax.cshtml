@@ -1,17 +1,16 @@
 ﻿@page
 @model AjaxModel
 @{
-    Layout = null;
 }
 
 <h2>Simple AJAX Form</h2>
 
-<form id="ajaxForm">
+<form id="ajaxForm" method="post">
     <label for="name">Name:</label>
-    <input type="text" id="name" name="name" />
+    <input type="text" id="name" name="name"/>
 
     <label for="email">Email:</label>
-    <input type="email" id="email" name="email" />
+    <input type="email" id="email" name="email"/>
 
     <button type="submit">Submit</button>
 </form>
@@ -22,14 +21,22 @@
     <script>
         $(document).ready(function () {
             $('#ajaxForm').submit(function (event) {
-                event.preventDefault(); // Prevent form from submitting normally
+                event.preventDefault();
 
                 $.ajax({
-                    url: '@Url.Page("Ajax")',  // Ensure the correct URL
+                    url: '@Url.Page("/Pages/Ajax")',  // Ensure the correct URL
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function (response) {
-                        $('#resultMessage').html('Form submitted successfully!');
+                        console.log(response)
+                        if (response.success) {
+                            // Display the posted data in the resultMessage div
+                            $('#resultMessage').html(
+                                `<p>Form submitted successfully!</p>
+                                     <p>Name: ${response.name}</p>
+                                     <p>Email: ${response.email}</p>`
+                            );
+                        }
                         console.log('Success:', response);  // For debugging
                     },
                     error: function (xhr, status, error) {
