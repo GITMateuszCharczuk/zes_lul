@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Dodaj us³ugi MVC do kontenera DI (Dependency Injection)
+// Dodaj usï¿½ugi MVC do kontenera DI (Dependency Injection)
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -12,20 +12,20 @@ var app = builder.Build();
 // Konfiguracja potoku HTTP
 if (!app.Environment.IsDevelopment())
 {
-    // Obs³uga b³êdów w œrodowisku produkcyjnym
+    // Obsï¿½uga bï¿½ï¿½dï¿½w w ï¿½rodowisku produkcyjnym
     app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();  // Obs³uga HSTS dla bezpiecznego HTTPS
+    app.UseHsts();  // Obsï¿½uga HSTS dla bezpiecznego HTTPS
 }
 
 app.UseHttpsRedirection();  // Przekierowanie na HTTPS
-app.UseStaticFiles();  // Obs³uga plików statycznych (np. CSS, JS)
+app.UseStaticFiles();  // Obsï¿½uga plikï¿½w statycznych (np. CSS, JS)
 
-app.UseRouting();  // W³¹czenie routingu
+app.UseRouting();  // Wï¿½ï¿½czenie routingu
 
-app.UseAuthorization();  // W³¹czenie autoryzacji (jeœli potrzebna)
+app.UseAuthorization();  // Wï¿½ï¿½czenie autoryzacji (jeï¿½li potrzebna)
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Calculator}/{action=Index}/{id?}");  // Konfiguracja domyœlnej trasy
+    pattern: "{controller=Index}/{action=Index}/{id?}");  // Konfiguracja domyï¿½lnej trasy
 
 app.Run();  // Uruchomienie aplikacji

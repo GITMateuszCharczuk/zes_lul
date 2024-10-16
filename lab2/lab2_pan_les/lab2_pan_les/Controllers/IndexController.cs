@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace lab2_pan_les.Controllers
 {
-    public class HomeController : Controller
+    public class IndexController : Controller
     {
         // Default action for rendering the form
         public IActionResult Index()
@@ -15,10 +15,10 @@ namespace lab2_pan_les.Controllers
         [HttpPost]
         public IActionResult Index(CalculatorModel model)
         {
-            // Obliczamy sumê liczb
+            // Obliczamy sumï¿½ liczb
             model.Result = model.Number1 + model.Number2;
 
-            // Zwracamy model do widoku, aby zachowaæ dane i wyœwietliæ wynik
+            // Zwracamy model do widoku, aby zachowaï¿½ dane i wyï¿½wietliï¿½ wynik
             return View(model);
         }
     }
