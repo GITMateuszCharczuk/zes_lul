@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = "Products List";
+}
+
+@model IEnumerable<lab_3.Models.ProductModel>
+
+<div class="content">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Products</h4>
+            <form method="get" class="form-inline">
+                <!-- Search by Name -->
+                <div class="form-group mx-2">
+                    <label for="searchTerm" class="sr-only">Search</label>
+                    <input type="text" name="searchTerm" id="searchTerm" class="form-control" placeholder="Search by name"
+                           value="@ViewContext.HttpContext.Request.Query["searchTerm"]"/>
+                </div>
+
+                <!-- Filter by Category -->
+                <div class="form-group mx-2">
+                    <label for="category" class="sr-only">Category</label>
+                    <input type="text" name="category" id="category" class="form-control" placeholder="Category"
+                           value="@ViewContext.HttpContext.Request.Query["category"]"/>
+                </div>
+
+                <!-- Sort By -->
+                <div class="form-group mx-2">
+                    <label for="sortBy" class="sr-only">Sort By</label>
+                    <select name="sortBy" id="sortBy" class="form-control">
+                        @if (ViewContext.HttpContext.Request.Query["sortBy"] == "")
+                        {
+                            <option value="" selected>Sort By</option>
+                        }
+                        else
+                        {
+                            <option value="">Sort By</option>
+                        }
+
+                        @if (ViewContext.HttpContext.Request.Query["sortBy"] == "Price")
+                        {
+                            <option value="Price" selected>Price</option>
+                        }
+                        else
+                        {
+                            <option value="Price">Price</option>
+                        }
+
+                        @if (ViewContext.HttpContext.Request.Query["sortBy"] == "Name")
+                        {
+                            <option value="Name" selected>Name</option>
+                        }
+                        else
+                        {
+                            <option value="Name">Name</option>
+                        }
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary mx-2">Filter</button>
+                <a href="@Url.Action("Create", "ProductModel")" class="btn btn-primary">Create New Product</a>
+            </form>
+        </div>
+
+        <div class="card-body">
+            <table class="table">
+                <thead class=" text-primary">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Available</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if (Model == null || !Model.Any())
+                {
+                    <tr>
+                        <td colspan="6" class="text-center">No products available.</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var product in Model)
+                    {
+                        <tr>
+                            <td>@product.Id</td>
+                            <td>@product.Name</td>
+                            <td>@product.Category</td>
+                            <td>@product.Price.ToString("C")</td>
+                            <td>@(product.IsAvailable ? "Yes" : "No")</td>
+                            <td>
+                                <a href="@Url.Action("Edit", "ProductModel", new { id = product.Id })" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="@Url.Action("Delete", "ProductModel", new { id = product.Id })" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

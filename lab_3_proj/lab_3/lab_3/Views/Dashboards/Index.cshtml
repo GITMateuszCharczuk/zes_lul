@@ -1,0 +1,200 @@
+﻿@{
+    ViewData["Title"] = "Dashboards";
+}
+
+@model IEnumerable<lab_3.Models.ProductModel>
+<div class="content">
+    <div class="card">
+        <div class="card-header">
+            <h5>Charts</h5>
+        </div>
+        <div class="card-body">
+            <div class="container">
+                <div class="chart-container">
+                    <canvas id="categoryCountChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="avgPriceChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="availabilityChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+    const products = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model));
+
+    gradientChartOptionsConfiguration = {
+        maintainAspectRatio: false,
+        legend: {
+            display: false
+        },
+        tooltips: {
+            bodySpacing: 4,
+            mode: "nearest",
+            intersect: 0,
+            position: "nearest",
+            xPadding: 10,
+            yPadding: 10,
+            caretPadding: 10
+        },
+        responsive: true,
+        scales: {
+            yAxes: [{
+                display: 0,
+                gridLines: 0,
+                ticks: {
+                    display: false
+                },
+                gridLines: {
+                    zeroLineColor: "transparent",
+                    drawTicks: false,
+                    display: false,
+                    drawBorder: false
+                }
+            }],
+            xAxes: [{
+                display: 0,
+                gridLines: 0,
+                ticks: {
+                    display: false
+                },
+                gridLines: {
+                    zeroLineColor: "transparent",
+                    drawTicks: false,
+                    display: false,
+                    drawBorder: false
+                }
+            }]
+        },
+        layout: {
+            padding: {
+                left: 0,
+                right: 0,
+                top: 15,
+                bottom: 15
+            }
+        }
+    };
+
+    function calculateCategoryStatistics(products) {
+        const categoryStats = {};
+
+        products.forEach(product => {
+            const category = product.Category;
+
+            if (!categoryStats[category]) {
+                categoryStats[category] = { Count: 0, TotalPrice: 0, AvailableCount: 0 };
+            }
+
+            categoryStats[category].Count++;
+            categoryStats[category].TotalPrice += product.Price;
+
+            if (product.IsAvailable) {
+                categoryStats[category].AvailableCount++;
+            }
+        });
+
+        return Object.keys(categoryStats).map(category => ({
+            Category: category,
+            Count: categoryStats[category].Count,
+            AveragePrice: categoryStats[category].TotalPrice / categoryStats[category].Count,
+            AvailabilityPercentage: (categoryStats[category].AvailableCount / categoryStats[category].Count) * 100
+        }));
+    }
+
+    const categoryStatistics = calculateCategoryStatistics(products);
+
+    function createBarChart(ctx, labels, data, label, yLabel) {
+        return new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                legend: {
+                    display: true
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: yLabel // Use the provided y-axis label
+                            }
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: yLabel // Set the y-axis label
+                        }
+                    }],
+                    xAxes: [{
+                        title: {
+                            display: true,
+                            text: 'Categories' // X-axis label
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                    text: label // Set the title for the chart
+                }
+            }
+        });
+    }
+
+    const labels = categoryStatistics.map(stat => stat.Category);
+    const counts = categoryStatistics.map(stat => stat.Count);
+    const avgPrices = categoryStatistics.map(stat => stat.AveragePrice);
+    const availabilities = categoryStatistics.map(stat => stat.AvailabilityPercentage);
+
+    const ctx1 = document.getElementById('categoryCountChart').getContext('2d');
+    createBarChart(ctx1, labels, counts, 'Number of Products by Category', 'Number of Products');
+
+    const ctx2 = document.getElementById('avgPriceChart').getContext('2d');
+    createBarChart(ctx2, labels, avgPrices, 'Average Price by Category', 'Average Price (PLN)');
+
+    const ctx3 = document.getElementById('availabilityChart').getContext('2d');
+    createBarChart(ctx3, labels, availabilities, 'Availability Percentage by Category', 'Availability (%)');
+</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+}
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background-color: #f9f9f9;
+    }
+
+    .chart-container {
+        width: 400px;
+        height: 300px;
+        margin: 20px;
+    }
+
+    canvas {
+        width: 100% !important;
+        height: 100% !important;
+    }
+</style>

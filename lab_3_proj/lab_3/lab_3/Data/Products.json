@@ -1,0 +1,177 @@
+[
+  {
+    "Id": 1,
+    "Name": "pomidorki",
+    "Category": "warzywko",
+    "Price": 1235.0,
+    "IsAvailable": false
+  },
+  {
+    "Id": 2,
+    "Name": "Leś",
+    "Category": "owoce",
+    "Price": 123457.0,
+    "IsAvailable": false
+  },
+  {
+    "Id": 3,
+    "Name": "Ogórek",
+    "Category": "Warzywka",
+    "Price": 325.0,
+    "IsAvailable": true
+  },
+  {
+    "Id": 4,
+    "Name": "Marchewka",
+    "Category": "warzywko",
+    "Price": 200.0,
+    "IsAvailable": true
+  },
+  {
+    "Id": 5,
+    "Name": "Ziemniak",
+    "Category": "warzywko",
+    "Price": 150.0,
+    "IsAvailable": true
+  },
+  {
+    "Id": 6,
+    "Name": "Jabłko",
+    "Category": "owoce",
+    "Price": 120.0,
+    "IsAvailable": true
+  },
+  {
+    "Id": 7,
+    "Name": "Banan",
+    "Category": "owoce",
+    "Price": 180.0,
+    "IsAvailable": true
+  },
+  {
+    "Id": 8,
+    "Name": "Truskawka",
+    "Category": "owoce",
+    "Price": 300.0,
+    "IsAvailable": true
+  },
+  {
+    "Id": 9,
+    "Name": "Brokuł",
+    "Category": "warzywko",
+    "Price": 350.0,
+    "IsAvailable": false
+  },
+  {
+    "Id": 10,
+    "Name": "Sałata",
+    "Category": "warzywko",
+    "Price": 180.0,
+    "IsAvailable": true
+  },
+  {
+    "Id": 11,
+    "Name": "Sok pomarańczowy",
+    "Category": "napoje",
+    "Price": 150.0,
+    "IsAvailable": false
+  },
+  {
+    "Id": 12,
+    "Name": "Woda mineralna",
+    "Category": "napoje",
+    "Price": 50.0,
+    "IsAvailable": true
+  },
+  {
+    "Id": 13,
+    "Name": "Kawa",
+    "Category": "napoje",
+    "Price": 100.0,
+    "IsAvailable": true
+  },
+  {
+    "Id": 14,
+    "Name": "Czekolada",
+    "Category": "przekąski",
+    "Price": 250.0,
+    "IsAvailable": true
+  },
+  {
+    "Id": 15,
+    "Name": "Chipsy",
+    "Category": "przekąski",
+    "Price": 120.0,
+    "IsAvailable": false
+  },
+  {
+    "Id": 16,
+    "Name": "Ciastka",
+    "Category": "przekąski",
+    "Price": 200.0,
+    "IsAvailable": true
+  },
+  {
+    "Id": 17,
+    "Name": "Mięso mielone",
+    "Category": "mięso",
+    "Price": 1200.0,
+    "IsAvailable": true
+  },
+  {
+    "Id": 18,
+    "Name": "Kurczak",
+    "Category": "mięso",
+    "Price": 800.0,
+    "IsAvailable": false
+  },
+  {
+    "Id": 19,
+    "Name": "Ryba",
+    "Category": "mięso",
+    "Price": 600.0,
+    "IsAvailable": false
+  },
+  {
+    "Id": 20,
+    "Name": "Ser",
+    "Category": "nabiał",
+    "Price": 350.0,
+    "IsAvailable": false
+  },
+  {
+    "Id": 21,
+    "Name": "Mleko",
+    "Category": "nabiał",
+    "Price": 200.0,
+    "IsAvailable": false
+  },
+  {
+    "Id": 22,
+    "Name": "Jogurt",
+    "Category": "nabiał",
+    "Price": 150.0,
+    "IsAvailable": false
+  },
+  {
+    "Id": 23,
+    "Name": "Chleb",
+    "Category": "pieczywo",
+    "Price": 120.0,
+    "IsAvailable": true
+  },
+  {
+    "Id": 24,
+    "Name": "Bułka",
+    "Category": "pieczywo",
+    "Price": 80.0,
+    "IsAvailable": true
+  },
+  {
+    "Id": 25,
+    "Name": "Tort",
+    "Category": "słodycze",
+    "Price": 500.0,
+    "IsAvailable": false
+  }
+]

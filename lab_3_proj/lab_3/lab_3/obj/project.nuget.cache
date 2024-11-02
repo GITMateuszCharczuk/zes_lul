@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "lf43B8Mls+a8Qej2P/JMGJdnVlb5vOk7MA9DIIj+wi4xgI4EFM+C353DlBWlIidXO93i9tlV3FexRxZQBD1SLw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\mateu\\Documents\\GitHub\\zes_lul\\lab_3_proj\\lab_3\\lab_3\\lab_3.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mateu\\.nuget\\packages\\jsonconverter.abstractions\\0.7.0\\jsonconverter.abstractions.0.7.0.nupkg.sha512",
+    "C:\\Users\\mateu\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
