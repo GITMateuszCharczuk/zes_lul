@@ -28,14 +28,6 @@ builder.Services.AddSwaggerGen();
 // Add MVC services
 builder.Services.AddControllers();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAllOrigins",
-        builder => builder.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader());
-});
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,8 +40,6 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty; // Set Swagger UI at the app's root
     });
 }
-
-app.UseCors("AllowAllOrigins");
 
 // Map controllers
 app.MapControllers();

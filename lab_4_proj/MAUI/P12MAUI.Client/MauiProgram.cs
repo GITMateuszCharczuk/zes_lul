@@ -87,7 +87,7 @@ namespace P12MAUI.Client
 
             var appSettingsSection = new AppSettings()
             {
-                BaseApiUrl = "https://cd8c-2a02-a319-ee-a480-41e6-c52b-a0c1-9def.ngrok-free.app",
+                BaseApiUrl = "https://88d0-2a02-a319-ee-a480-f324-8852-24d6-318f.ngrok-free.app",
                 ProductEndpoint = new ProductEndpoint()
                 {
                     BaseUrl = "/whatever/api/",

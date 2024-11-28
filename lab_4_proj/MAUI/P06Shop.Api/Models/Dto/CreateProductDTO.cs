@@ -1,4 +1,4 @@
-namespace P06Shop.Api.Models
+namespace P06Shop.Api.Models.Dto
 {
     public class CreateProductDTO
     {

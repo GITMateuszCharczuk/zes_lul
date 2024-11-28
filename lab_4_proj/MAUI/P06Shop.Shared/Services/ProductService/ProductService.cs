@@ -35,14 +35,16 @@ namespace P06Shop.Shared.Services.ProductService
             // jeżeli uzyjemy / na początku to będzie to adres bezwzględny
             // czyli scieżka bedzie wyglądać tak: https://localhost:5001/1
             // zacznyamy od roota
-            var response = await _httpClient.DeleteAsync($"{id}");
+            string deleteUrl = _appSettings.ProductEndpoint.DeleteProducts + "/" + id;
+            var response = await _httpClient.DeleteAsync($"{deleteUrl}");
             var result = await response.Content.ReadFromJsonAsync<ServiceReponse<bool>>();
             return result;
         }
 
         public async Task<ServiceReponse<Product>> GetProductAsync(int id)
         {
-            var response = await _httpClient.GetAsync($"{id}");
+            string getUrl = _appSettings.ProductEndpoint.GetProducts+"/"+ id;
+            var response = await _httpClient.GetAsync($"{getUrl}");
             var result = await response.Content.ReadFromJsonAsync<ServiceReponse<Product>>();
             return result;
         }

@@ -4,7 +4,7 @@ using P06Shop.Api.Data;
 using P06Shop.Api.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using P06Shop.Api.Models.Dto;
 [ApiController]
 [Route("api/[controller]")]
 public class ProductsController : ControllerBase

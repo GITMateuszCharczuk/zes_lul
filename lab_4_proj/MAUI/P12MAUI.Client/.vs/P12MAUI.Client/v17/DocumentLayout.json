@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab_4_proj\\MAUI\\P12MAUI.Client\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{807E3CDA-A45E-4E73-8789-EE4B98D1384A}|P12MAUI.Client.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab_4_proj\\maui\\p12maui.client\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{807E3CDA-A45E-4E73-8789-EE4B98D1384A}|P12MAUI.Client.csproj|solutionrelative:mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0BA4CBE0-CFC5-4F96-92DF-917A51F4C5FA}|..\\P06Shop.Shared\\P06Shop.Shared.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab_4_proj\\maui\\p06shop.shared\\services\\productservice\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0BA4CBE0-CFC5-4F96-92DF-917A51F4C5FA}|..\\P06Shop.Shared\\P06Shop.Shared.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab_4_proj\\maui\\p06shop.shared\\confguration\\productendpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0BA4CBE0-CFC5-4F96-92DF-917A51F4C5FA}|..\\P06Shop.Shared\\P06Shop.Shared.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab_4_proj\\maui\\p06shop.shared\\confguration\\speechsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0BA4CBE0-CFC5-4F96-92DF-917A51F4C5FA}|..\\P06Shop.Shared\\P06Shop.Shared.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab_4_proj\\maui\\p06shop.shared\\messagebox\\imessagedialogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{0BA4CBE0-CFC5-4F96-92DF-917A51F4C5FA}|..\\P06Shop.Shared\\P06Shop.Shared.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab_4_proj\\maui\\p06shop.shared\\services\\productservice\\iproductservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -12,27 +28,11 @@
       "AbsoluteMoniker": "D:0:0:{0BA4CBE0-CFC5-4F96-92DF-917A51F4C5FA}|..\\P06Shop.Shared\\P06Shop.Shared.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab_4_proj\\maui\\p06shop.shared\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0BA4CBE0-CFC5-4F96-92DF-917A51F4C5FA}|..\\P06Shop.Shared\\P06Shop.Shared.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab_4_proj\\maui\\p06shop.shared\\messagebox\\imessagedialogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0BA4CBE0-CFC5-4F96-92DF-917A51F4C5FA}|..\\P06Shop.Shared\\P06Shop.Shared.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab_4_proj\\maui\\p06shop.shared\\confguration\\speechsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0BA4CBE0-CFC5-4F96-92DF-917A51F4C5FA}|..\\P06Shop.Shared\\P06Shop.Shared.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab_4_proj\\maui\\p06shop.shared\\confguration\\productendpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0BA4CBE0-CFC5-4F96-92DF-917A51F4C5FA}|..\\P06Shop.Shared\\P06Shop.Shared.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab_4_proj\\maui\\p06shop.shared\\confguration\\appsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{807E3CDA-A45E-4E73-8789-EE4B98D1384A}|P12MAUI.Client.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab_4_proj\\maui\\p12maui.client\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{807E3CDA-A45E-4E73-8789-EE4B98D1384A}|P12MAUI.Client.csproj|solutionrelative:mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{807E3CDA-A45E-4E73-8789-EE4B98D1384A}|P12MAUI.Client.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab_4_proj\\maui\\p12maui.client\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{807E3CDA-A45E-4E73-8789-EE4B98D1384A}|P12MAUI.Client.csproj|solutionrelative:mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0BA4CBE0-CFC5-4F96-92DF-917A51F4C5FA}|..\\P06Shop.Shared\\P06Shop.Shared.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab_4_proj\\maui\\p06shop.shared\\services\\productservice\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{807E3CDA-A45E-4E73-8789-EE4B98D1384A}|P12MAUI.Client.csproj|c:\\users\\testo\\documents\\github\\zes_lul\\lab_4_proj\\maui\\p12maui.client\\viewmodels\\productdetailsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -73,24 +73,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 0,
               "Title": "MauiProgram.cs",
               "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab_4_proj\\MAUI\\P12MAUI.Client\\MauiProgram.cs",
               "RelativeDocumentMoniker": "MauiProgram.cs",
               "ToolTip": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab_4_proj\\MAUI\\P12MAUI.Client\\MauiProgram.cs",
               "RelativeToolTip": "MauiProgram.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAmwGoAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFkAAABfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-27T21:13:35.103Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "IMessageDialogService.cs",
               "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab_4_proj\\MAUI\\P06Shop.Shared\\MessageBox\\IMessageDialogService.cs",
               "RelativeDocumentMoniker": "..\\P06Shop.Shared\\MessageBox\\IMessageDialogService.cs",
@@ -103,7 +103,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "SpeechSettings.cs",
               "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab_4_proj\\MAUI\\P06Shop.Shared\\Confguration\\SpeechSettings.cs",
               "RelativeDocumentMoniker": "..\\P06Shop.Shared\\Confguration\\SpeechSettings.cs",
@@ -116,7 +116,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "ProductEndpoint.cs",
               "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab_4_proj\\MAUI\\P06Shop.Shared\\Confguration\\ProductEndpoint.cs",
               "RelativeDocumentMoniker": "..\\P06Shop.Shared\\Confguration\\ProductEndpoint.cs",
@@ -129,7 +129,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "AppSettings.cs",
               "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab_4_proj\\MAUI\\P06Shop.Shared\\Confguration\\AppSettings.cs",
               "RelativeDocumentMoniker": "..\\P06Shop.Shared\\Confguration\\AppSettings.cs",
@@ -137,8 +137,7 @@
               "RelativeToolTip": "..\\P06Shop.Shared\\Confguration\\AppSettings.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAmwA0AAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-27T21:13:18.155Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-27T21:13:18.155Z"
             },
             {
               "$type": "Document",
@@ -154,33 +153,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 1,
               "Title": "ProductService.cs",
               "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab_4_proj\\MAUI\\P06Shop.Shared\\Services\\ProductService\\ProductService.cs",
               "RelativeDocumentMoniker": "..\\P06Shop.Shared\\Services\\ProductService\\ProductService.cs",
               "ToolTip": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab_4_proj\\MAUI\\P06Shop.Shared\\Services\\ProductService\\ProductService.cs",
               "RelativeToolTip": "..\\P06Shop.Shared\\Services\\ProductService\\ProductService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGkAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAnwCYAAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-27T21:12:58.422Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "IProductService.cs",
               "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab_4_proj\\MAUI\\P06Shop.Shared\\Services\\ProductService\\IProductService.cs",
               "RelativeDocumentMoniker": "..\\P06Shop.Shared\\Services\\ProductService\\IProductService.cs",
               "ToolTip": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab_4_proj\\MAUI\\P06Shop.Shared\\Services\\ProductService\\IProductService.cs",
               "RelativeToolTip": "..\\P06Shop.Shared\\Services\\ProductService\\IProductService.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAxwBMAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAQwA4AAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-27T21:12:55.497Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "Product.cs",
               "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab_4_proj\\MAUI\\P06Shop.Shared\\Product.cs",
               "RelativeDocumentMoniker": "..\\P06Shop.Shared\\Product.cs",
@@ -188,12 +187,11 @@
               "RelativeToolTip": "..\\P06Shop.Shared\\Product.cs",
               "ViewState": "AgIAABUAAAAAAAAAAAAAABkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-27T21:12:23.141Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-27T21:12:23.141Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "ServiceReponse.cs",
               "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab_4_proj\\MAUI\\P06Shop.Shared\\ServiceReponse.cs",
               "RelativeDocumentMoniker": "..\\P06Shop.Shared\\ServiceReponse.cs",
@@ -201,8 +199,7 @@
               "RelativeToolTip": "..\\P06Shop.Shared\\ServiceReponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-27T21:12:20.796Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-27T21:12:20.796Z"
             },
             {
               "$type": "Document",
@@ -218,7 +215,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "MainPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\testo\\Documents\\GitHub\\zes_lul\\lab_4_proj\\MAUI\\P12MAUI.Client\\MainPage.xaml.cs",
               "RelativeDocumentMoniker": "MainPage.xaml.cs",
@@ -226,8 +223,7 @@
               "RelativeToolTip": "MainPage.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-27T21:03:54.145Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-27T21:03:54.145Z"
             },
             {
               "$type": "Document",
@@ -299,8 +295,7 @@
               "RelativeToolTip": "ViewModels\\ProductDetailsViewModel.cs",
               "ViewState": "AgIAADQAAAAAAAAAAAAewEAAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-27T20:43:21.042Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-27T20:43:21.042Z"
             }
           ]
         }

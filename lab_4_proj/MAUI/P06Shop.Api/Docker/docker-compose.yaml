@@ -17,6 +17,20 @@ services:
       - ENV=PROD
     depends_on:
       - product-service
+  api-web:
+    build:
+      context: ../../car-rental-admin
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - .:/app
+    networks:
+      - docker-network
+    depends_on:
+      - api-gateway
   product-service:
     build:
       context: ../

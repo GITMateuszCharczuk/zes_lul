@@ -18,7 +18,11 @@ func main() {
 		cfg.ProductServiceURL + "/swagger/v1/swagger.json",
 	}
 
-	r.Use(cors.Default())
+	r.Use(cors.New(cors.Config{
+		AllowAllOrigins: true,
+		AllowMethods:    []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:    []string{"Origin", "Content-Type", "Accept", "ngrok-skip-browser-warning"},
+	}))
 	r.Use(middleware.RequestLogger())
 	r.Use(middleware.RecoveryMiddleware())
 	r.Use(middleware.RateLimiter(cfg.RequestSentLimit, cfg.RequestSentTimeWindow))
