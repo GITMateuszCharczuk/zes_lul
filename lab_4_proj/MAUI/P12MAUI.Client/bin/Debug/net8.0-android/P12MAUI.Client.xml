@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>P12MAUI.Client</name>
+    </assembly>
+    <members>
+        <member name="T:P12MAUI.Client.ViewModels.ProductDetailsViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:P12MAUI.Client.ViewModels.ProductDetailsViewModel.Product">
+            <inheritdoc cref="F:P12MAUI.Client.ViewModels.ProductDetailsViewModel.product"/>
+        </member>
+        <member name="F:P12MAUI.Client.ViewModels.ProductDetailsViewModel.deleteCommand">
+            <summary>The backing field for <see cref="P:P12MAUI.Client.ViewModels.ProductDetailsViewModel.DeleteCommand"/>.</summary>
+        </member>
+        <member name="P:P12MAUI.Client.ViewModels.ProductDetailsViewModel.DeleteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:P12MAUI.Client.ViewModels.ProductDetailsViewModel.Delete"/>.</summary>
+        </member>
+        <member name="F:P12MAUI.Client.ViewModels.ProductDetailsViewModel.saveCommand">
+            <summary>The backing field for <see cref="P:P12MAUI.Client.ViewModels.ProductDetailsViewModel.SaveCommand"/>.</summary>
+        </member>
+        <member name="P:P12MAUI.Client.ViewModels.ProductDetailsViewModel.SaveCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:P12MAUI.Client.ViewModels.ProductDetailsViewModel.Save"/>.</summary>
+        </member>
+        <member name="T:P12MAUI.Client.ViewModels.ProductsViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:P12MAUI.Client.ViewModels.ProductsViewModel.Products">
+            <inheritdoc cref="F:P12MAUI.Client.ViewModels.ProductsViewModel._products"/>
+        </member>
+        <member name="P:P12MAUI.Client.ViewModels.ProductsViewModel.SelectedProduct">
+            <inheritdoc cref="F:P12MAUI.Client.ViewModels.ProductsViewModel._selectedProduct"/>
+        </member>
+        <member name="F:P12MAUI.Client.ViewModels.ProductsViewModel.showDetailsCommand">
+            <summary>The backing field for <see cref="P:P12MAUI.Client.ViewModels.ProductsViewModel.ShowDetailsCommand"/>.</summary>
+        </member>
+        <member name="P:P12MAUI.Client.ViewModels.ProductsViewModel.ShowDetailsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:P12MAUI.Client.ViewModels.ProductsViewModel.ShowDetails(P06Shop.Shared.Product)"/>.</summary>
+        </member>
+        <member name="F:P12MAUI.Client.ViewModels.ProductsViewModel.newCommand">
+            <summary>The backing field for <see cref="P:P12MAUI.Client.ViewModels.ProductsViewModel.NewCommand"/>.</summary>
+        </member>
+        <member name="P:P12MAUI.Client.ViewModels.ProductsViewModel.NewCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:P12MAUI.Client.ViewModels.ProductsViewModel.New"/>.</summary>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs">
+            <summary>
+            A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instances
+            for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Product">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Product" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Products">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Products" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedProduct">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedProduct" generated properties.</summary>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs">
+            <summary>
+            A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instances
+            for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Product">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Product" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Products">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Products" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedProduct">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedProduct" generated properties.</summary>
+        </member>
+    </members>
+</doc>

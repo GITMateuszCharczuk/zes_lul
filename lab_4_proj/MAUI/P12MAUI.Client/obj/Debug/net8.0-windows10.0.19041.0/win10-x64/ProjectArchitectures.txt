@@ -1,0 +1,1 @@
+C:\Users\testo\Documents\GitHub\zes_lul\lab_4_proj\MAUI\P12MAUI.Client\P12MAUI.Client.csproj;x64
