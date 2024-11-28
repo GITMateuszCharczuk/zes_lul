@@ -1,0 +1,24 @@
+services:
+  api-gateway:
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - SERVICE_PORT=8000
+      - PRODUCT_SERVICE_URL=http://product-service:8080
+      - REQUEST_SENT_LIMIT=100
+      - REQUEST_SENT_TIME_WINDOW=60
+      - REQUEST_SIZE_LIMIT=10
+      - MAIN_API_ROUTE=/whatever/api
+      - ENV=PROD
+    depends_on:
+      - file-service
+      - email-service
+    networks:
+      - docker-network
+
+networks:
+  docker-network:
+    driver: bridge

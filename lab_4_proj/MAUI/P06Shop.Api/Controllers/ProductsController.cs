@@ -50,7 +50,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ServiceResponse<Product>>> GetProduct(string id)
+    public async Task<ActionResult<ServiceResponse<Product>>> GetProduct(int id)
     {
         var response = new ServiceResponse<Product>();
         Console.WriteLine($"Received request to get product with ID: {id}");
@@ -81,12 +81,22 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<ServiceResponse<Product>>> CreateProduct(Product product)
+    public async Task<ActionResult<ServiceResponse<Product>>> CreateProduct(CreateProductDTO productDto)
     {
         var response = new ServiceResponse<Product>();
         Console.WriteLine("Received request to create a new product.");
         try
         {
+            var product = new Product
+            {
+                Id = new Random().Next(1, int.MaxValue), // Generates a random integer that can be used as an ID
+                Title = productDto.Title,
+                Description = productDto.Description,
+                Barcode = productDto.Barcode,
+                Price = productDto.Price,
+                ReleaseDate = productDto.ReleaseDate
+            };
+
             await _context.Products.InsertOneAsync(product);
             response.Data = product;
             response.Success = true;
@@ -104,40 +114,40 @@ public class ProductsController : ControllerBase
         }
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateProduct(string id, Product updatedProduct)
+    [HttpPut]
+    public async Task<ActionResult<ServiceResponse<Product>>> UpdateProduct(Product updatedProduct)
     {
         var response = new ServiceResponse<Product>();
-        Console.WriteLine($"Received request to update product with ID: {id}");
+        Console.WriteLine($"Received request to update product with ID: {updatedProduct.Id}");
         try
         {
-            var result = await _context.Products.ReplaceOneAsync(p => p.Id == id, updatedProduct);
+            var result = await _context.Products.ReplaceOneAsync(p => p.Id == updatedProduct.Id, updatedProduct);
             if (result.MatchedCount == 0)
             {
                 response.Success = false;
                 response.Message = "Product not found.";
-                Console.WriteLine($"Product with ID: {id} not found for update.");
+                Console.WriteLine($"Product with ID: {updatedProduct.Id} not found for update.");
                 return NotFound(response);
             }
             response.Success = true;
             response.Message = "Product updated successfully.";
-            Console.WriteLine($"Product with ID: {id} updated successfully.");
-            return NoContent();
+            Console.WriteLine($"Product with ID: {updatedProduct.Id} updated successfully.");
+            return Ok(response);
         }
         catch (Exception ex)
         {
             // Log the exception (ex) here if needed
             response.Success = false;
             response.Message = "Internal server error while updating the product.";
-            Console.WriteLine($"Error updating product with ID: {id}. Exception: {ex.Message}");
+            Console.WriteLine($"Error updating product with ID: {updatedProduct.Id}. Exception: {ex.Message}");
             return StatusCode(500, response);
         }
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteProduct(string id)
+    public async Task<ActionResult<ServiceResponse<bool>>> DeleteProduct(int id)
     {
-        var response = new ServiceResponse<Product>();
+        var response = new ServiceResponse<bool>();
         Console.WriteLine($"Received request to delete product with ID: {id}");
         try
         {
@@ -145,19 +155,22 @@ public class ProductsController : ControllerBase
             if (result.DeletedCount == 0)
             {
                 response.Success = false;
+                response.Data = false;
                 response.Message = "Product not found.";
                 Console.WriteLine($"Product with ID: {id} not found for deletion.");
                 return NotFound(response);
             }
             response.Success = true;
+            response.Data = true;
             response.Message = "Product deleted successfully.";
             Console.WriteLine($"Product with ID: {id} deleted successfully.");
-            return NoContent();
+            return Ok(response);
         }
         catch (Exception ex)
         {
             // Log the exception (ex) here if needed
             response.Success = false;
+            response.Data = false;
             response.Message = "Internal server error while deleting the product.";
             Console.WriteLine($"Error deleting product with ID: {id}. Exception: {ex.Message}");
             return StatusCode(500, response);

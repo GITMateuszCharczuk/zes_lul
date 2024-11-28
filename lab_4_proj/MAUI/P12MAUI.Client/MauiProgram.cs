@@ -87,14 +87,15 @@ namespace P12MAUI.Client
 
             var appSettingsSection = new AppSettings()
             {
-                BaseApiUrl = "https://693b-2a02-a319-ee-a480-41e6-c52b-a0c1-9def.ngrok-free.app",
+                BaseApiUrl = "https://cd8c-2a02-a319-ee-a480-41e6-c52b-a0c1-9def.ngrok-free.app",
                 ProductEndpoint = new ProductEndpoint()
                 {
-                    BaseUrl = "/api/products",
-                    GetProducts = "",
-                    CreateProduct = "",
-                    UpdateProduct = "",
-                    SearchProducts = "",
+                    BaseUrl = "/whatever/api/",
+                    GetProducts = "Products",
+                    CreateProduct = "Products",
+                    UpdateProduct = "Products",
+                    SearchProducts = "Products",
+                    DeleteProducts = "Products",
                 }
             };
 

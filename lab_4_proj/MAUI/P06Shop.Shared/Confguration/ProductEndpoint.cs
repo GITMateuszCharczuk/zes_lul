@@ -14,5 +14,6 @@ namespace P06Shop.Shared.Confguration
         public string? UpdateProduct { get; set; }
 
         public string? SearchProducts { get; set; }
+        public string? DeleteProducts { get; set; }
     }
 }
