@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { HubConnectionBuilder } from '@microsoft/signalr';
 import { CreateTicket } from './CreateTicket';
+import { playNotificationSound } from '../utils/sound';
+import { showTicketUpdateNotification } from '../utils/notifications';
 
 interface Ticket {
   id: string;
@@ -8,11 +10,13 @@ interface Ticket {
   description: string;
   status: string;
   createdAt: string;
+  adminComment?: string;
 }
 
 export const TicketList = () => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [connection, setConnection] = useState<any>(null);
+  const isAdminView = window.location.pathname.includes('/admin');
 
   useEffect(() => {
     // Fetch initial tickets
@@ -33,20 +37,42 @@ export const TicketList = () => {
       .build();
 
     setConnection(newConnection);
-    newConnection.start();
+    newConnection.start()
+      .then(() => {
+        console.log('SignalR Connected in TicketList');
 
-    newConnection.on('TicketCreated', (ticket: Ticket) => {
-      setTickets(prev => [...prev, ticket]);
-    });
+        newConnection.on('TicketCreated', (ticket: Ticket) => {
+          setTickets(prev => [...prev, ticket]);
+          if(isAdminView){playNotificationSound();}
+        });
 
-    newConnection.on('TicketUpdated', (updatedTicket: Ticket) => {
-      setTickets(prev => 
-        prev.map(ticket => 
-          ticket.id === updatedTicket.id ? updatedTicket : ticket
-        )
-      );
-    });
-  }, []);
+        newConnection.on('TicketUpdated', (updatedTicket: Ticket) => {
+          setTickets(prev => 
+            prev.map(ticket => 
+              ticket.id === updatedTicket.id ? updatedTicket : ticket
+            )
+          );
+          if (!isAdminView) {
+            playNotificationSound();
+            showTicketUpdateNotification(updatedTicket);
+          }
+        });
+
+        newConnection.on('TicketDeleted', (ticketId: string) => {
+          setTickets(prev => prev.filter(ticket => ticket.id !== ticketId));
+          if (!isAdminView) {
+            playNotificationSound();
+          }
+        });
+      })
+      .catch(err => console.error('Error starting SignalR connection:', err));
+
+    return () => {
+      if (newConnection) {
+        newConnection.stop();
+      }
+    };
+  }, [isAdminView]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -71,6 +97,12 @@ export const TicketList = () => {
                 </span>
               </div>
               <p className="text-gray-600 mb-4">{ticket.description}</p>
+              {ticket.adminComment && (
+                <div className="mb-4 p-2 bg-yellow-50 border border-yellow-200 rounded">
+                  <p className="text-sm font-medium text-gray-700">Komentarz administratora:</p>
+                  <p className="text-gray-600">{ticket.adminComment}</p>
+                </div>
+              )}
               <div className="text-sm text-gray-500">
                 Created: {new Date(ticket.createdAt).toLocaleDateString()}
               </div>

@@ -59,13 +59,54 @@ namespace TicketSystem.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(string id, Ticket ticket)
+        public async Task<IActionResult> Update(string id, [FromBody] UpdateTicketDto ticketDto)
         {
-            ticket.UpdatedAt = DateTime.UtcNow;
-            await _tickets.ReplaceOneAsync(t => t.Id == id, ticket);
-            await _hubContext.Clients.All.SendAsync("TicketUpdated", ticket);
-            
-            return Ok(ticket);
+            var update = Builders<Ticket>.Update
+                .Set(t => t.Title, ticketDto.Title)
+                .Set(t => t.Description, ticketDto.Description)
+                .Set(t => t.Status, ticketDto.Status)
+                .Set(t => t.AdminComment, ticketDto.AdminComment)
+                .Set(t => t.UpdatedAt, DateTime.UtcNow);
+
+            var options = new FindOneAndUpdateOptions<Ticket>
+            {
+                ReturnDocument = ReturnDocument.After
+            };
+
+            var updatedTicket = await _tickets.FindOneAndUpdateAsync(
+                t => t.Id == id,
+                update,
+                options);
+
+            if (updatedTicket == null)
+            {
+                return NotFound();
+            }
+
+            await _hubContext.Clients.All.SendAsync("TicketUpdated", updatedTicket);
+            return Ok(updatedTicket);
+        }
+
+        [HttpGet("refresh")]
+        public async Task<IActionResult> RefreshTickets()
+        {
+            var tickets = await _tickets.Find(_ => true).ToListAsync();
+            await _hubContext.Clients.All.SendAsync("TicketsRefreshed", tickets);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var result = await _tickets.DeleteOneAsync(t => t.Id == id);
+
+            if (result.DeletedCount == 0)
+            {
+                return NotFound();
+            }
+
+            await _hubContext.Clients.All.SendAsync("TicketDeleted", id);
+            return NoContent();
         }
     }
 } 

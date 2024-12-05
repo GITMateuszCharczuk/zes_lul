@@ -9,5 +9,6 @@ namespace TicketSystem.API.Models
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public required string UserId { get; set; }
+        public string? AdminComment { get; set; }
     }
 } 
