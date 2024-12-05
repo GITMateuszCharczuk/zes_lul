@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - docker-network
+
+  backend:
+    build:
+      context: ./TicketSystem.API
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - MongoDB__ConnectionString=mongodb://mongodb:27017
+      - MongoDB__DatabaseName=TicketSystem
+    depends_on:
+      - mongodb
+    networks:
+      - docker-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: docker/Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - docker-network
+
+volumes:
+  mongodb_data: 
+
+networks:
+  docker-network:
+    driver: bridge
