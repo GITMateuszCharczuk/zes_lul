@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "SPQiCJZTrJ6soEsg0PhprmtltmxukoCVsBFPDv+p1Kg=",
+  "Source": "P06Shop.Api",
+  "BasePath": "_content/P06Shop.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
