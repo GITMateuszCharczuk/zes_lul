@@ -42,17 +42,6 @@ public class Program
                 };
             });
 
-        // Add CORS
-        builder.Services.AddCors(options =>
-        {
-            options.AddPolicy("AllowAll", builder =>
-            {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            });
-        });
-
         // Register services
         builder.Services.AddScoped<AuthService>();
 
@@ -71,7 +60,7 @@ public class Program
             app.UseHttpsRedirection();
         }
 
-        app.UseCors("AllowAll");
+        app.UseRouting();
 
         app.UseAuthentication();
         app.UseAuthorization();
