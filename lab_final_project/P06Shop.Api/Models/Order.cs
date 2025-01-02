@@ -7,7 +7,7 @@ namespace P06Shop.Api.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
 
         [BsonRepresentation(BsonType.ObjectId)]
         public required string UserId { get; set; }
@@ -20,8 +20,9 @@ namespace P06Shop.Api.Models
 
     public class OrderItem
     {
-        public int ProductId { get; set; }
-        public int Quantity { get; set; }
-        public decimal PriceAtOrder { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public required string ProductId { get; set; }
+        public required int Quantity { get; set; }
+        public required decimal PriceAtOrder { get; set; }
     }
 } 

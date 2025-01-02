@@ -2,7 +2,10 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using P06Shop.Api.Data;
+using P06Shop.Api.Mappers;
+using P06Shop.Api.Mappers.Interfaces;
 using P06Shop.Api.Services;
+using Microsoft.OpenApi.Models;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("P06Shop.Api.Tests")]
 
@@ -10,6 +13,22 @@ namespace P06Shop.Api;
 
 public class Program
 {
+    private static TokenValidationParameters GetTokenValidationParameters(IConfiguration configuration)
+    {
+        return new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key not configured"))),
+            ValidateIssuer = !string.IsNullOrEmpty(configuration["Jwt:Issuer"]),
+            ValidIssuer = configuration["Jwt:Issuer"],
+            ValidateAudience = !string.IsNullOrEmpty(configuration["Jwt:Audience"]),
+            ValidAudience = configuration["Jwt:Audience"],
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+    }
+
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +36,35 @@ public class Program
         // Add services to the container.
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "P06Shop API", Version = "v1" });
+            
+            // Configure JWT authentication for Swagger
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Description = "JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token in the text input below.",
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer"
+            });
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    Array.Empty<string>()
+                }
+            });
+        });
 
         // Configure MongoDB
         builder.Services.AddSingleton<MongoDbContext>(sp =>
@@ -28,22 +75,43 @@ public class Program
             return new MongoDbContext(connectionString!, databaseName!);
         });
 
-        // Configure Authentication
-        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key not configured"))),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
+        // Share token validation parameters
+        var tokenValidationParameters = GetTokenValidationParameters(builder.Configuration);
+        builder.Services.AddSingleton(tokenValidationParameters);
+
+        // Configure JWT Authentication
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.SaveToken = true;
+            options.RequireHttpsMetadata = false;
+            options.TokenValidationParameters = tokenValidationParameters;
+        });
 
         // Register services
         builder.Services.AddScoped<AuthService>();
+        builder.Services.AddScoped<JwtService>();
+
+        // Register mappers
+        builder.Services.AddScoped<IOrderMapper, OrderMapper>();
+        builder.Services.AddScoped<IProductMapper, ProductMapper>();
+        builder.Services.AddScoped<IUserMapper, UserMapper>();
+
+        // Configure CORS
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            });
+        });
 
         var app = builder.Build();
 
@@ -51,7 +119,11 @@ public class Program
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "P06Shop API V1");
+                c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
+            });
         }
 
         // Only use HTTPS redirection if not in Docker
@@ -61,6 +133,7 @@ public class Program
         }
 
         app.UseRouting();
+        app.UseCors();
 
         app.UseAuthentication();
         app.UseAuthorization();

@@ -17,21 +17,28 @@ namespace P06Shop.Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<AuthResponse>> Login(LoginModel model)
+        public async Task<ActionResult<AuthResponse>> Login([FromBody] LoginRequest model)
         {
-            var response = await _authService.Login(model);
-            if (response == null)
-                return Unauthorized("Invalid email or password");
+            var response = await _authService.Login(model.Username, model.Password);
+            if (!response.Success)
+                return BadRequest(response);
 
             return Ok(response);
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<AuthResponse>> Register(RegisterModel model)
+        public async Task<ActionResult<AuthResponse>> Register([FromBody] RegisterRequest model)
         {
-            var response = await _authService.Register(model);
-            if (response == null)
-                return BadRequest("Email or username already exists");
+            var response = await _authService.Register(
+                model.Username,
+                model.Email,
+                model.Password,
+                model.FirstName,
+                model.LastName
+            );
+
+            if (!response.Success)
+                return BadRequest(response);
 
             return Ok(response);
         }
@@ -41,7 +48,7 @@ namespace P06Shop.Api.Controllers
         public async Task<IActionResult> PromoteToAdmin(string userId)
         {
             var result = await _authService.PromoteToAdmin(userId);
-            if (!result)
+            if (!result.Success)
                 return NotFound("User not found");
 
             return Ok("User promoted to Admin");
@@ -52,7 +59,7 @@ namespace P06Shop.Api.Controllers
         public async Task<IActionResult> DemoteToCustomer(string userId)
         {
             var result = await _authService.DemoteToCustomer(userId);
-            if (!result)
+            if (!result.Success)
                 return BadRequest("Cannot demote the last admin or user not found");
 
             return Ok("User demoted to Customer");

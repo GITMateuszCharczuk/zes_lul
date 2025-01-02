@@ -2,178 +2,207 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using P06Shop.Api.Data;
 using P06Shop.Api.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using P06Shop.Api.Models.Dto;
+using P06Shop.Api.Mappers.Interfaces;
+using MongoDB.Bson;
+using Microsoft.AspNetCore.Authorization;
+
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class ProductsController : ControllerBase
 {
     private readonly MongoDbContext _context;
+    private readonly IProductMapper _productMapper;
 
-    public ProductsController(MongoDbContext context)
+    public ProductsController(MongoDbContext context, IProductMapper productMapper)
     {
         _context = context;
+        _productMapper = productMapper;
     }
 
     [HttpGet]
-    public async Task<ActionResult<ServiceResponse<IEnumerable<Product>>>> GetProducts()
+    public async Task<ActionResult<IEnumerable<GetProductDTO>>> GetProducts()
     {
-        var response = new ServiceResponse<IEnumerable<Product>>();
-        Console.WriteLine("Received request to get all products.");
         try
         {
             var products = await _context.Products.Find(_ => true).ToListAsync();
             
             if (products == null || !products.Any())
+                return NotFound("No products found.");
+
+            var productDtos = new List<GetProductDTO>();
+            foreach (var product in products)
             {
-                response.Success = false;
-                response.Message = "No products found.";
-                Console.WriteLine("No products found.");
-                return NotFound(response);
+                var categories = await GetCategoriesForProduct(product.Id);
+                productDtos.Add(_productMapper.MapToGetProductDTO(product, categories));
             }
 
-            response.Data = products;
-            response.Success = true;
-            response.Message = "Products retrieved successfully.";
-            Console.WriteLine($"Retrieved {products.Count} products successfully.");
-            return Ok(response);
+            return Ok(productDtos);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            // Log the exception (ex) here if needed
-            response.Success = false;
-            response.Message = "Internal server error while retrieving products.";
-            Console.WriteLine($"Error retrieving products: {ex.Message}");
-            return StatusCode(500, response);
+            return StatusCode(500, "Internal server error while retrieving products.");
         }
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ServiceResponse<Product>>> GetProduct(int id)
+    public async Task<ActionResult<GetProductDTO>> GetProduct(string id)
     {
-        var response = new ServiceResponse<Product>();
-        Console.WriteLine($"Received request to get product with ID: {id}");
         try
         {
             var product = await _context.Products.Find(p => p.Id == id).FirstOrDefaultAsync();
             if (product == null)
-            {
-                response.Success = false;
-                response.Message = "Product not found.";
-                Console.WriteLine($"Product with ID: {id} not found.");
-                return NotFound(response);
-            }
-            response.Data = product;
-            response.Success = true;
-            response.Message = "Product retrieved successfully.";
-            Console.WriteLine($"Product with ID: {id} retrieved successfully.");
-            return Ok(response);
+                return NotFound("Product not found.");
+
+            var categories = await GetCategoriesForProduct(product.Id);
+            var productDto = _productMapper.MapToGetProductDTO(product, categories);
+
+            return Ok(productDto);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            // Log the exception (ex) here if needed
-            response.Success = false;
-            response.Message = "Internal server error while retrieving the product.";
-            Console.WriteLine($"Error retrieving product with ID: {id}. Exception: {ex.Message}");
-            return StatusCode(500, response);
+            return StatusCode(500, "Internal server error while retrieving the product.");
         }
     }
 
     [HttpPost]
-    public async Task<ActionResult<ServiceResponse<Product>>> CreateProduct(CreateProductDTO productDto)
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<GetProductDTO>> CreateProduct(CreateProductDTO productDto)
     {
-        var response = new ServiceResponse<Product>();
-        Console.WriteLine("Received request to create a new product.");
         try
         {
-            var product = new Product
-            {
-                Id = new Random().Next(1, int.MaxValue), // Generates a random integer that can be used as an ID
-                Title = productDto.Title,
-                Description = productDto.Description,
-                Barcode = productDto.Barcode,
-                Price = productDto.Price,
-                ReleaseDate = productDto.ReleaseDate
-            };
-
+            var product = _productMapper.MapCreateDTOToProduct(productDto);
             await _context.Products.InsertOneAsync(product);
-            response.Data = product;
-            response.Success = true;
-            response.Message = "Product created successfully.";
-            Console.WriteLine($"Product created successfully with ID: {product.Id}");
-            return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, response);
+
+            // Handle categories
+            foreach (var categoryName in productDto.Categories)
+            {
+                var category = await _context.Categories.Find(c => c.Name == categoryName).FirstOrDefaultAsync();
+                
+                if (category == null)
+                {
+                    category = new Category
+                    {
+                        Id = ObjectId.GenerateNewId().ToString(),
+                        Name = categoryName,
+                        ProductIds = new List<string> { product.Id }
+                    };
+                    await _context.Categories.InsertOneAsync(category);
+                }
+                else
+                {
+                    if (!category.ProductIds.Contains(product.Id))
+                    {
+                        var update = Builders<Category>.Update.Push(c => c.ProductIds, product.Id);
+                        await _context.Categories.UpdateOneAsync(c => c.Id == category.Id, update);
+                    }
+                }
+            }
+
+            var categories = await GetCategoriesForProduct(product.Id);
+            var createdProductDto = _productMapper.MapToGetProductDTO(product, categories);
+
+            return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, createdProductDto);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            // Log the exception (ex) here if needed
-            response.Success = false;
-            response.Message = "Internal server error while creating the product.";
-            Console.WriteLine($"Error creating product: {ex.Message}");
-            return StatusCode(500, response);
+            return StatusCode(500, "Internal server error while creating the product.");
         }
     }
 
-    [HttpPut]
-    public async Task<ActionResult<ServiceResponse<Product>>> UpdateProduct(Product updatedProduct)
+    [HttpPut("{id}")]
+    public async Task<ActionResult<GetProductDTO>> UpdateProduct(string id, UpdateProductDTO updateDto)
     {
-        var response = new ServiceResponse<Product>();
-        Console.WriteLine($"Received request to update product with ID: {updatedProduct.Id}");
         try
         {
-            var result = await _context.Products.ReplaceOneAsync(p => p.Id == updatedProduct.Id, updatedProduct);
+            var existingProduct = await _context.Products.Find(p => p.Id == id).FirstOrDefaultAsync();
+            if (existingProduct == null)
+                return NotFound("Product not found.");
+
+            var product = _productMapper.MapUpdateDTOToProduct(id, updateDto, existingProduct);
+            var result = await _context.Products.ReplaceOneAsync(p => p.Id == id, product);
             if (result.MatchedCount == 0)
+                return NotFound("Product not found.");
+
+            // Update categories only if they were provided
+            if (updateDto.Categories != null)
             {
-                response.Success = false;
-                response.Message = "Product not found.";
-                Console.WriteLine($"Product with ID: {updatedProduct.Id} not found for update.");
-                return NotFound(response);
+                // Remove product from categories that are no longer associated
+                var existingCategories = await _context.Categories.Find(c => c.ProductIds.Contains(id)).ToListAsync();
+                foreach (var category in existingCategories)
+                {
+                    if (!updateDto.Categories.Contains(category.Name))
+                    {
+                        var update = Builders<Category>.Update.Pull(c => c.ProductIds, id);
+                        await _context.Categories.UpdateOneAsync(c => c.Id == category.Id, update);
+                    }
+                }
+
+                // Add product to new categories
+                foreach (var categoryName in updateDto.Categories)
+                {
+                    var category = await _context.Categories.Find(c => c.Name == categoryName).FirstOrDefaultAsync();
+                    if (category == null)
+                    {
+                        category = new Category
+                        {
+                            Id = ObjectId.GenerateNewId().ToString(),
+                            Name = categoryName,
+                            ProductIds = new List<string> { id }
+                        };
+                        await _context.Categories.InsertOneAsync(category);
+                    }
+                    else if (!category.ProductIds.Contains(id))
+                    {
+                        var update = Builders<Category>.Update.Push(c => c.ProductIds, id);
+                        await _context.Categories.UpdateOneAsync(c => c.Id == category.Id, update);
+                    }
+                }
             }
-            response.Success = true;
-            response.Message = "Product updated successfully.";
-            Console.WriteLine($"Product with ID: {updatedProduct.Id} updated successfully.");
-            return Ok(response);
+
+            var categories = await GetCategoriesForProduct(product.Id);
+            var updatedProductDto = _productMapper.MapToGetProductDTO(product, categories);
+
+            return Ok(updatedProductDto);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            // Log the exception (ex) here if needed
-            response.Success = false;
-            response.Message = "Internal server error while updating the product.";
-            Console.WriteLine($"Error updating product with ID: {updatedProduct.Id}. Exception: {ex.Message}");
-            return StatusCode(500, response);
+            return StatusCode(500, "Internal server error while updating the product.");
         }
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<ServiceResponse<bool>>> DeleteProduct(int id)
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> DeleteProduct(string id)
     {
-        var response = new ServiceResponse<bool>();
-        Console.WriteLine($"Received request to delete product with ID: {id}");
         try
         {
+            // Remove product from all categories
+            var categories = await _context.Categories.Find(c => c.ProductIds.Contains(id)).ToListAsync();
+            foreach (var category in categories)
+            {
+                var update = Builders<Category>.Update.Pull(c => c.ProductIds, id);
+                await _context.Categories.UpdateOneAsync(c => c.Id == category.Id, update);
+            }
+
             var result = await _context.Products.DeleteOneAsync(p => p.Id == id);
             if (result.DeletedCount == 0)
-            {
-                response.Success = false;
-                response.Data = false;
-                response.Message = "Product not found.";
-                Console.WriteLine($"Product with ID: {id} not found for deletion.");
-                return NotFound(response);
-            }
-            response.Success = true;
-            response.Data = true;
-            response.Message = "Product deleted successfully.";
-            Console.WriteLine($"Product with ID: {id} deleted successfully.");
-            return Ok(response);
+                return NotFound("Product not found.");
+
+            return NoContent();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            // Log the exception (ex) here if needed
-            response.Success = false;
-            response.Data = false;
-            response.Message = "Internal server error while deleting the product.";
-            Console.WriteLine($"Error deleting product with ID: {id}. Exception: {ex.Message}");
-            return StatusCode(500, response);
+            return StatusCode(500, "Internal server error while deleting the product.");
         }
+    }
+
+    private async Task<List<string>> GetCategoriesForProduct(string productId)
+    {
+        var categories = await _context.Categories
+            .Find(c => c.ProductIds.Contains(productId))
+            .ToListAsync();
+        return categories.Select(c => c.Name).ToList();
     }
 }
