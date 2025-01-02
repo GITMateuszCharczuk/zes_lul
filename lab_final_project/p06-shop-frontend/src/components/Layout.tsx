@@ -30,7 +30,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6" component={Link} to="/" sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
-                        Online Shop {user && `(User ID: ${user.userId})`}
+                        Online Shop
                     </Typography>
 
                     {user ? (
@@ -54,6 +54,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                                     <ShoppingCart />
                                 </Badge>
                             </IconButton>
+                            {user && `${user.username}`}
                             <IconButton
                                 onClick={handleMenu}
                                 color="inherit"

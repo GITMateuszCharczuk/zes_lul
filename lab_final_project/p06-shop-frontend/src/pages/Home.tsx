@@ -10,12 +10,15 @@ import {
     Container,
     CircularProgress,
     Box,
-    Alert
+    Alert,
+    Stack
 } from '@mui/material';
+import { Edit as EditIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { Product } from '../models/types';
 import { productService } from '../services/api';
 import { useCart } from '../contexts/CartContext';
+import { useAuth } from '../contexts/AuthContext';
 
 export const Home: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
@@ -23,6 +26,7 @@ export const Home: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
     const { addToCart } = useCart();
+    const { user, isAdmin } = useAuth();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -47,6 +51,11 @@ export const Home: React.FC = () => {
     const handleAddToCart = (product: Product, event: React.MouseEvent) => {
         event.stopPropagation();
         addToCart(product);
+    };
+
+    const handleEditProduct = (event: React.MouseEvent, productId: string) => {
+        event.stopPropagation();
+        navigate(`/admin/product/${productId}`);
     };
 
     if (loading) {
@@ -93,7 +102,7 @@ export const Home: React.FC = () => {
                                 <CardMedia
                                     component="img"
                                     height="200"
-                                    image={`https://picsum.photos/seed/${product.id}/400/300`}
+                                    image={product.imageUrl}
                                     alt={product.title}
                                 />
                                 <CardContent sx={{ flexGrow: 1 }}>
@@ -107,7 +116,7 @@ export const Home: React.FC = () => {
                                         ${product.price.toFixed(2)}
                                     </Typography>
                                 </CardContent>
-                                <CardActions>
+                                <CardActions sx={{ justifyContent: 'space-between', px: 2 }}>
                                     <Button
                                         size="small"
                                         color="primary"
@@ -115,6 +124,16 @@ export const Home: React.FC = () => {
                                     >
                                         Add to Cart
                                     </Button>
+                                    {isAdmin && (
+                                        <Button
+                                            size="small"
+                                            color="secondary"
+                                            startIcon={<EditIcon />}
+                                            onClick={(e) => handleEditProduct(e, product.id)}
+                                        >
+                                            Edit
+                                        </Button>
+                                    )}
                                 </CardActions>
                             </Card>
                         </Grid>

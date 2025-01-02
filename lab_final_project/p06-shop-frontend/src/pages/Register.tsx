@@ -44,14 +44,24 @@ export const Register: React.FC = () => {
             return;
         }
 
+        if (formData.password.length < 6) {
+            setError('Password must be at least 6 characters long');
+            return;
+        }
+
+        if (formData.username.length < 3) {
+            setError('Username must be at least 3 characters long');
+            return;
+        }
+
         setLoading(true);
 
         try {
             const { confirmPassword, ...registerData } = formData;
             await register(registerData);
             navigate('/');
-        } catch (err) {
-            setError('Failed to create an account. Please try again.');
+        } catch (err: any) {
+            setError(err.response?.data?.message || 'Failed to create an account. Please try again.');
             console.error('Registration error:', err);
         } finally {
             setLoading(false);
