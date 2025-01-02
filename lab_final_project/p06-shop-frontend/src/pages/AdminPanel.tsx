@@ -5,7 +5,6 @@ import {
     Paper,
     Tabs,
     Tab,
-    Box,
     Table,
     TableBody,
     TableCell,
@@ -13,18 +12,19 @@ import {
     TableHead,
     TableRow,
     Button,
-    Chip,
-    CircularProgress,
+    Box,
+    Alert,
+    Stack,
+    TextField,
     IconButton,
     Menu,
     MenuItem,
-    TextField,
-    Stack,
-    Alert
+    Chip,
+    CircularProgress
 } from '@mui/material';
 import { MoreVert as MoreVertIcon } from '@mui/icons-material';
-import { Order, User } from '../models/types';
-import { orderService, userService } from '../services/api';
+import { userService, orderService, productService } from '../services/api';
+import { User, Order } from '../models/types';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -32,7 +32,7 @@ interface TabPanelProps {
     value: number;
 }
 
-const TabPanel = (props: TabPanelProps) => {
+function TabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
 
     return (
@@ -43,18 +43,13 @@ const TabPanel = (props: TabPanelProps) => {
             aria-labelledby={`simple-tab-${index}`}
             {...other}
         >
-            {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+            {value === index && (
+                <Box sx={{ p: 3 }}>
+                    {children}
+                </Box>
+            )}
         </div>
     );
-};
-
-interface ProductForm {
-    title: string;
-    description: string;
-    imageUrl: string;
-    barcode: string;
-    price: number;
-    categories: string;
 }
 
 export const AdminPanel: React.FC = () => {
@@ -62,9 +57,12 @@ export const AdminPanel: React.FC = () => {
     const [users, setUsers] = useState<User[]>([]);
     const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
-    const [productForm, setProductForm] = useState<ProductForm>({
+
+    // Product form state
+    const [productForm, setProductForm] = useState({
         title: '',
         description: '',
         imageUrl: '',
@@ -86,6 +84,7 @@ export const AdminPanel: React.FC = () => {
                 setOrders(ordersData);
             } catch (error) {
                 console.error('Failed to fetch data:', error);
+                setError('Failed to load data. Please try again later.');
             } finally {
                 setLoading(false);
             }
@@ -108,13 +107,12 @@ export const AdminPanel: React.FC = () => {
         if (selectedUserId) {
             try {
                 await userService.promoteToAdmin(selectedUserId);
-                setUsers(users.map(user =>
-                    user.id === selectedUserId
-                        ? { ...user, role: 'Admin' }
-                        : user
-                ));
+                // Refresh users list
+                const updatedUsers = await userService.getAll();
+                setUsers(updatedUsers);
             } catch (error) {
-                console.error('Failed to promote user:', error);
+                // console.error('Failed to promote user:', error);
+                // setError('Failed to promote user to admin.');
             }
         }
         handleMenuClose();
@@ -124,28 +122,26 @@ export const AdminPanel: React.FC = () => {
         if (selectedUserId) {
             try {
                 await userService.demoteToCustomer(selectedUserId);
-                setUsers(users.map(user =>
-                    user.id === selectedUserId
-                        ? { ...user, role: 'Customer' }
-                        : user
-                ));
+                // Refresh users list
+                const updatedUsers = await userService.getAll();
+                setUsers(updatedUsers);
             } catch (error) {
-                console.error('Failed to demote user:', error);
+                // console.error('Failed to demote user:', error);
+                // setError('Failed to demote user to customer.');
             }
         }
         handleMenuClose();
     };
 
-    const handleUpdateOrderStatus = async (orderId: string, newStatus: string) => {
+    const handleUpdateOrderStatus = async (orderId: string, status: string) => {
         try {
-            await orderService.updateStatus(orderId, newStatus);
-            setOrders(orders.map(order =>
-                order.id === orderId
-                    ? { ...order, status: newStatus }
-                    : order
-            ));
+            await orderService.updateStatus(orderId, status);
+            // Refresh orders list
+            const updatedOrders = await orderService.getAll();
+            setOrders(updatedOrders);
         } catch (error) {
             console.error('Failed to update order status:', error);
+            setError('Failed to update order status.');
         }
     };
 
@@ -205,125 +201,126 @@ export const AdminPanel: React.FC = () => {
         }));
     };
 
-    if (loading) {
-        return (
-            <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
-                <CircularProgress />
-            </Box>
-        );
-    }
-
     return (
         <Container>
             <Typography variant="h4" component="h1" gutterBottom>
                 Admin Panel
             </Typography>
-            <Paper>
-                <Tabs value={tab} onChange={(_, newValue) => setTab(newValue)}>
+            <Paper sx={{ width: '100%', mb: 2 }}>
+                <Tabs value={tab} onChange={(e, newValue) => setTab(newValue)}>
                     <Tab label="Users" />
                     <Tab label="Orders" />
-                    <Tab label="Products" />
+                    <Tab label="Add Product" />
                 </Tabs>
 
                 <TabPanel value={tab} index={0}>
-                    <TableContainer>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Username</TableCell>
-                                    <TableCell>Email</TableCell>
-                                    <TableCell>Name</TableCell>
-                                    <TableCell>Role</TableCell>
-                                    <TableCell>Actions</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {users.map((user) => (
-                                    <TableRow key={user.id}>
-                                        <TableCell>{user.username}</TableCell>
-                                        <TableCell>{user.email}</TableCell>
-                                        <TableCell>{`${user.firstName} ${user.lastName}`}</TableCell>
-                                        <TableCell>
-                                            <Chip
-                                                label={user.role}
-                                                color={user.role === 'Admin' ? 'primary' : 'default'}
-                                                size="small"
-                                            />
-                                        </TableCell>
-                                        <TableCell>
-                                            <IconButton
-                                                onClick={(e) => handleMenuClick(e, user.id!)}
-                                            >
-                                                <MoreVertIcon />
-                                            </IconButton>
-                                        </TableCell>
+                    {loading ? (
+                        <Box display="flex" justifyContent="center" p={3}>
+                            <CircularProgress />
+                        </Box>
+                    ) : error ? (
+                        <Alert severity="error" sx={{ m: 2 }}>{error}</Alert>
+                    ) : (
+                        <TableContainer>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Username</TableCell>
+                                        <TableCell>Email</TableCell>
+                                        <TableCell>Name</TableCell>
+                                        <TableCell>Role</TableCell>
+                                        <TableCell>Actions</TableCell>
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                                </TableHead>
+                                <TableBody>
+                                    {Array.isArray(users) && users.map((user) => (
+                                        <TableRow key={user.id}>
+                                            <TableCell>{user.username}</TableCell>
+                                            <TableCell>{user.email}</TableCell>
+                                            <TableCell>{`${user.firstName} ${user.lastName}`}</TableCell>
+                                            <TableCell>
+                                                <Chip
+                                                    label={user.role}
+                                                    color={user.role === 'Admin' ? 'primary' : 'default'}
+                                                    size="small"
+                                                />
+                                            </TableCell>
+                                            <TableCell>
+                                                <IconButton
+                                                    onClick={(e) => handleMenuClick(e, user.id!)}
+                                                >
+                                                    <MoreVertIcon />
+                                                </IconButton>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    )}
                 </TabPanel>
 
                 <TabPanel value={tab} index={1}>
-                    <TableContainer>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Order ID</TableCell>
-                                    <TableCell>User</TableCell>
-                                    <TableCell>Date</TableCell>
-                                    <TableCell align="right">Total Amount</TableCell>
-                                    <TableCell>Status</TableCell>
-                                    <TableCell>Actions</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {orders.map((order) => (
-                                    <TableRow key={order.id}>
-                                        <TableCell>{order.id}</TableCell>
-                                        <TableCell>
-                                            {users.find(u => u.id === order.userId)?.username || 'Unknown'}
-                                        </TableCell>
-                                        <TableCell>
-                                            {new Date(order.orderDate || '').toLocaleDateString()}
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            ${order.totalAmount.toFixed(2)}
-                                        </TableCell>
-                                        <TableCell>
-                                            <Chip
-                                                label={order.status}
-                                                color={
-                                                    order.status === 'Pending'
-                                                        ? 'warning'
-                                                        : order.status === 'Shipped'
-                                                            ? 'success'
-                                                            : 'default'
-                                                }
-                                                size="small"
-                                            />
-                                        </TableCell>
-                                        <TableCell>
-                                            <Button
-                                                size="small"
-                                                onClick={() => handleUpdateOrderStatus(order.id!, 'Shipped')}
-                                                disabled={order.status === 'Shipped'}
-                                            >
-                                                Mark as Shipped
-                                            </Button>
-                                        </TableCell>
+                    {loading ? (
+                        <Box display="flex" justifyContent="center" p={3}>
+                            <CircularProgress />
+                        </Box>
+                    ) : error ? (
+                        <Alert severity="error" sx={{ m: 2 }}>{error}</Alert>
+                    ) : (
+                        <TableContainer>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Order ID</TableCell>
+                                        <TableCell>Date</TableCell>
+                                        <TableCell align="right">Total</TableCell>
+                                        <TableCell>Status</TableCell>
+                                        <TableCell>Actions</TableCell>
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                                </TableHead>
+                                <TableBody>
+                                    {Array.isArray(orders) && orders.map((order) => (
+                                        <TableRow key={order.id}>
+                                            <TableCell>{order.id}</TableCell>
+                                            <TableCell>
+                                                {new Date(order.orderDate || '').toLocaleDateString()}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                ${order.totalAmount.toFixed(2)}
+                                            </TableCell>
+                                            <TableCell>
+                                                <Chip
+                                                    label={order.status}
+                                                    color={
+                                                        order.status === 'Pending'
+                                                            ? 'warning'
+                                                            : order.status === 'Shipped'
+                                                                ? 'success'
+                                                                : 'default'
+                                                    }
+                                                    size="small"
+                                                />
+                                            </TableCell>
+                                            <TableCell>
+                                                <Button
+                                                    size="small"
+                                                    onClick={() => handleUpdateOrderStatus(order.id!, 'Shipped')}
+                                                    disabled={order.status === 'Shipped'}
+                                                >
+                                                    Mark as Shipped
+                                                </Button>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    )}
                 </TabPanel>
 
                 <TabPanel value={tab} index={2}>
-                    <Paper sx={{ p: 3 }}>
-                        <Typography variant="h6" gutterBottom>
-                            Add New Product
-                        </Typography>
+                    <Paper sx={{ p: 3, maxWidth: 600, mx: 'auto' }}>
                         {productError && (
                             <Alert severity="error" sx={{ mb: 2 }}>
                                 {productError}

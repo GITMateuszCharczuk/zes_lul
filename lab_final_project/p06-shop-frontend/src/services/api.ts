@@ -51,10 +51,7 @@ api.interceptors.response.use(
 export const authService = {
     login: async (credentials: LoginModel): Promise<AuthResponse> => {
         try {
-            const response = await api.post<ServiceResponse<AuthResponse>>('/Auth/login', {
-                username: credentials.email,
-                password: credentials.password
-            });
+            const response = await api.post<ServiceResponse<AuthResponse>>('/Auth/login', credentials);
             const data = response as unknown as AuthResponse;
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data));
@@ -67,13 +64,7 @@ export const authService = {
 
     register: async (data: RegisterModel): Promise<AuthResponse> => {
         try {
-            const response = await api.post<ServiceResponse<AuthResponse>>('/Auth/register', {
-                username: data.username,
-                email: data.email,
-                password: data.password,
-                firstName: data.firstName,
-                lastName: data.lastName
-            });
+            const response = await api.post<ServiceResponse<AuthResponse>>('/Auth/register', data);
             const authData = response as unknown as AuthResponse;
             localStorage.setItem('token', authData.token);
             localStorage.setItem('user', JSON.stringify(authData));
@@ -97,13 +88,42 @@ export const authService = {
 
 export const productService = {
     getAll: async (): Promise<Product[]> => {
-        const response = await api.get<ServiceResponse<Product[]>>('/Products');
-        return response as unknown as Product[];
+        try {
+            const response = await api.get<ServiceResponse<Product[]>>('/Products');
+            return response as unknown as Product[];
+        } catch (error) {
+            console.error('Failed to fetch products:', error);
+            throw error;
+        }
     },
 
     getById: async (id: string): Promise<Product> => {
-        const response = await api.get<ServiceResponse<Product>>(`/Products/${id}`);
-        return response as unknown as Product;
+        try {
+            const response = await api.get<ServiceResponse<Product>>(`/Products/${id}`);
+            return response as unknown as Product;
+        } catch (error) {
+            console.error('Failed to fetch product:', error);
+            throw error;
+        }
+    },
+
+    update: async (id: string, product: Product): Promise<Product> => {
+        try {
+            const response = await api.put<ServiceResponse<Product>>(`/Products/${id}`, product);
+            return response as unknown as Product;
+        } catch (error) {
+            console.error('Failed to update product:', error);
+            throw error;
+        }
+    },
+
+    delete: async (id: string): Promise<void> => {
+        try {
+            await api.delete(`/Products/${id}`);
+        } catch (error) {
+            console.error('Failed to delete product:', error);
+            throw error;
+        }
     },
 };
 
@@ -116,6 +136,11 @@ export const orderService = {
     getById: async (id: string): Promise<Order> => {
         const response = await api.get<ServiceResponse<Order>>(`/Orders/${id}`);
         return response as unknown as Order;
+    },
+
+    getByUserId: async (userId: string): Promise<Order[]> => {
+        const response = await api.get<ServiceResponse<Order>>(`/Orders/user/${userId}`);
+        return response as unknown as Order[];
     },
 
     create: async (order: Order): Promise<Order> => {
@@ -135,7 +160,8 @@ export const orderService = {
 export const userService = {
     getAll: async (): Promise<User[]> => {
         const response = await api.get<ServiceResponse<User[]>>('/Users');
-        return response as unknown as User[];
+        const e = response as any;
+        return e.users as unknown as User[];
     },
 
     getById: async (id: string): Promise<User> => {

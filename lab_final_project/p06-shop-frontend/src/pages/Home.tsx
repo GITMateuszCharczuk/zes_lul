@@ -11,9 +11,10 @@ import {
     CircularProgress,
     Box,
     Alert,
-    Stack
+    Stack,
+    IconButton
 } from '@mui/material';
-import { Edit as EditIcon } from '@mui/icons-material';
+import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { Product } from '../models/types';
 import { productService } from '../services/api';
@@ -28,19 +29,19 @@ export const Home: React.FC = () => {
     const { addToCart } = useCart();
     const { user, isAdmin } = useAuth();
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const data = await productService.getAll();
-                setProducts(data || []);
-            } catch (error) {
-                console.error('Failed to fetch products:', error);
-                setError('Failed to load products. Please try again later.');
-            } finally {
-                setLoading(false);
-            }
-        };
+    const fetchProducts = async () => {
+        try {
+            const data = await productService.getAll();
+            setProducts(data || []);
+        } catch (error) {
+            console.error('Failed to fetch products:', error);
+            setError('Failed to load products. Please try again later.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
+    useEffect(() => {
         fetchProducts();
     }, []);
 
@@ -56,6 +57,20 @@ export const Home: React.FC = () => {
     const handleEditProduct = (event: React.MouseEvent, productId: string) => {
         event.stopPropagation();
         navigate(`/admin/product/${productId}`);
+    };
+
+    const handleDeleteProduct = async (event: React.MouseEvent, productId: string) => {
+        event.stopPropagation();
+        if (window.confirm('Are you sure you want to delete this product?')) {
+            try {
+                await productService.delete(productId);
+                // Refresh the products list
+                fetchProducts();
+            } catch (error) {
+                console.error('Failed to delete product:', error);
+                setError('Failed to delete product. Please try again later.');
+            }
+        }
     };
 
     if (loading) {
@@ -125,14 +140,22 @@ export const Home: React.FC = () => {
                                         Add to Cart
                                     </Button>
                                     {isAdmin && (
-                                        <Button
-                                            size="small"
-                                            color="secondary"
-                                            startIcon={<EditIcon />}
-                                            onClick={(e) => handleEditProduct(e, product.id)}
-                                        >
-                                            Edit
-                                        </Button>
+                                        <Box>
+                                            <IconButton
+                                                size="small"
+                                                color="secondary"
+                                                onClick={(e) => handleEditProduct(e, product.id)}
+                                            >
+                                                <EditIcon />
+                                            </IconButton>
+                                            <IconButton
+                                                size="small"
+                                                color="error"
+                                                onClick={(e) => handleDeleteProduct(e, product.id)}
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </Box>
                                     )}
                                 </CardActions>
                             </Card>

@@ -25,7 +25,7 @@ export const Orders: React.FC = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const data = await orderService.getAll();
+                const data = await orderService.getByUserId(user?.userId || '');
                 setOrders(data);
             } catch (error) {
                 console.error('Failed to fetch orders:', error);
