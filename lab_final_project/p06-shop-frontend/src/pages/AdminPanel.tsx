@@ -17,7 +17,10 @@ import {
     CircularProgress,
     IconButton,
     Menu,
-    MenuItem
+    MenuItem,
+    TextField,
+    Stack,
+    Alert
 } from '@mui/material';
 import { MoreVert as MoreVertIcon } from '@mui/icons-material';
 import { Order, User } from '../models/types';
@@ -45,6 +48,15 @@ const TabPanel = (props: TabPanelProps) => {
     );
 };
 
+interface ProductForm {
+    title: string;
+    description: string;
+    imageUrl: string;
+    barcode: string;
+    price: number;
+    categories: string;
+}
+
 export const AdminPanel: React.FC = () => {
     const [tab, setTab] = useState(0);
     const [users, setUsers] = useState<User[]>([]);
@@ -52,6 +64,16 @@ export const AdminPanel: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+    const [productForm, setProductForm] = useState<ProductForm>({
+        title: '',
+        description: '',
+        imageUrl: '',
+        barcode: '',
+        price: 0,
+        categories: ''
+    });
+    const [productError, setProductError] = useState<string | null>(null);
+    const [productSuccess, setProductSuccess] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -127,6 +149,62 @@ export const AdminPanel: React.FC = () => {
         }
     };
 
+    const handleProductSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setProductError(null);
+        setProductSuccess(null);
+
+        try {
+            const categoriesArray = productForm.categories
+                .split(',')
+                .map(cat => cat.trim())
+                .filter(cat => cat.length > 0);
+
+            const productData = {
+                title: productForm.title,
+                description: productForm.description,
+                imageUrl: productForm.imageUrl,
+                barcode: productForm.barcode,
+                price: Number(productForm.price),
+                releaseDate: new Date().toISOString(),
+                categories: categoriesArray
+            };
+
+            const response = await fetch('http://localhost:8000/whatever/api/Products', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify(productData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to create product');
+            }
+
+            setProductSuccess('Product created successfully!');
+            setProductForm({
+                title: '',
+                description: '',
+                imageUrl: '',
+                barcode: '',
+                price: 0,
+                categories: ''
+            });
+        } catch (err) {
+            setProductError(err instanceof Error ? err.message : 'Failed to create product');
+        }
+    };
+
+    const handleProductFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setProductForm(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
     if (loading) {
         return (
             <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
@@ -144,6 +222,7 @@ export const AdminPanel: React.FC = () => {
                 <Tabs value={tab} onChange={(_, newValue) => setTab(newValue)}>
                     <Tab label="Users" />
                     <Tab label="Orders" />
+                    <Tab label="Products" />
                 </Tabs>
 
                 <TabPanel value={tab} index={0}>
@@ -238,6 +317,88 @@ export const AdminPanel: React.FC = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
+                </TabPanel>
+
+                <TabPanel value={tab} index={2}>
+                    <Paper sx={{ p: 3 }}>
+                        <Typography variant="h6" gutterBottom>
+                            Add New Product
+                        </Typography>
+                        {productError && (
+                            <Alert severity="error" sx={{ mb: 2 }}>
+                                {productError}
+                            </Alert>
+                        )}
+                        {productSuccess && (
+                            <Alert severity="success" sx={{ mb: 2 }}>
+                                {productSuccess}
+                            </Alert>
+                        )}
+                        <Box component="form" onSubmit={handleProductSubmit}>
+                            <Stack spacing={2}>
+                                <TextField
+                                    fullWidth
+                                    label="Title"
+                                    name="title"
+                                    value={productForm.title}
+                                    onChange={handleProductFormChange}
+                                    required
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Description"
+                                    name="description"
+                                    value={productForm.description}
+                                    onChange={handleProductFormChange}
+                                    multiline
+                                    rows={4}
+                                    required
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Image URL"
+                                    name="imageUrl"
+                                    value={productForm.imageUrl}
+                                    onChange={handleProductFormChange}
+                                    required
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Barcode"
+                                    name="barcode"
+                                    value={productForm.barcode}
+                                    onChange={handleProductFormChange}
+                                    required
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Price"
+                                    name="price"
+                                    type="number"
+                                    value={productForm.price}
+                                    onChange={handleProductFormChange}
+                                    required
+                                />
+                                <TextField
+                                    fullWidth
+                                    label="Categories (comma-separated)"
+                                    name="categories"
+                                    value={productForm.categories}
+                                    onChange={handleProductFormChange}
+                                    helperText="Enter categories separated by commas (e.g., Electronics, Gadgets)"
+                                    required
+                                />
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    size="large"
+                                >
+                                    Add Product
+                                </Button>
+                            </Stack>
+                        </Box>
+                    </Paper>
                 </TabPanel>
             </Paper>
 
