@@ -1,10 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using MongoDB.Driver;
-using P06Shop.Api.Data;
-using P06Shop.Api.Models;
 using P06Shop.Api.Models.Dto;
-using P06Shop.Api.Mappers.Interfaces;
+using P06Shop.Api.Services;
 using System.Security.Claims;
 
 namespace P06Shop.Api.Controllers
@@ -14,51 +11,58 @@ namespace P06Shop.Api.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly MongoDbContext _context;
-        private readonly IOrderMapper _orderMapper;
+        private readonly OrderService _orderService;
 
-        public OrdersController(MongoDbContext context, IOrderMapper orderMapper)
+        public OrdersController(OrderService orderService)
         {
-            _context = context;
-            _orderMapper = orderMapper;
+            _orderService = orderService;
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<GetOrderDTO>>> GetOrders()
         {
-            var orders = await _context.Orders.Find(_ => true).ToListAsync();
-            var orderDtos = _orderMapper.MapToGetOrderDTOs(orders);
-            return Ok(orderDtos);
+            var result = await _orderService.GetOrders();
+            if (!result.Success)
+                return StatusCode(500, result.ErrorMessage);
+
+            return Ok(result.Orders);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<GetOrderDTO>> GetOrder(string id)
         {
-            var order = await _context.Orders.Find(x => x.Id == id).FirstOrDefaultAsync();
-            if (order == null)
-                return NotFound();
-
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+                return Unauthorized();
 
-            if (order.UserId != userId && !User.IsInRole("Admin"))
-                return Forbid();
+            var result = await _orderService.GetOrder(id, userId, User.IsInRole("Admin"));
+            if (!result.Success)
+            {
+                if (result.ErrorMessage == "Forbidden")
+                    return Forbid();
+                return NotFound(result.ErrorMessage);
+            }
 
-            var orderDto = _orderMapper.MapToGetOrderDTO(order);
-            return Ok(orderDto);
+            return Ok(result.Order);
         }
 
         [HttpGet("user/{userId}")]
         public async Task<ActionResult<IEnumerable<GetOrderDTO>>> GetUserOrders(string userId)
         {
             var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (currentUserId == null)
+                return Unauthorized();
 
-            if (userId != currentUserId && !User.IsInRole("Admin"))
-                return Forbid();
+            var result = await _orderService.GetUserOrders(userId, currentUserId, User.IsInRole("Admin"));
+            if (!result.Success)
+            {
+                if (result.ErrorMessage == "Forbidden")
+                    return Forbid();
+                return StatusCode(500, result.ErrorMessage);
+            }
 
-            var orders = await _context.Orders.Find(x => x.UserId == userId).ToListAsync();
-            var orderDtos = _orderMapper.MapToGetOrderDTOs(orders);
-            return Ok(orderDtos);
+            return Ok(result.Orders);
         }
 
         [HttpPost]
@@ -68,102 +72,38 @@ namespace P06Shop.Api.Controllers
             if (currentUserId == null)
                 return Unauthorized();
 
-            string userId;
-            if (!string.IsNullOrEmpty(orderDto.UserId))
-            {
-                userId = orderDto.UserId;
-            }
-            else
-            {
-                userId = currentUserId;
-            }
+            var result = await _orderService.CreateOrder(orderDto, currentUserId);
+            if (!result.Success)
+                return BadRequest(result.ErrorMessage);
 
-            // Verify that the user exists
-            var user = await _context.Users.Find(x => x.Id == userId).FirstOrDefaultAsync();
-            if (user == null)
-                return BadRequest("Invalid user ID");
-
-            // Calculate total amount based on products
-            decimal total = 0;
-            var orderItems = new List<OrderItem>();
-            foreach (var item in orderDto.Items)
-            {
-                var product = await _context.Products.Find(x => x.Id == item.ProductId).FirstOrDefaultAsync();
-                if (product == null)
-                    return BadRequest($"Product with ID {item.ProductId} not found");
-                
-                var orderItem = new OrderItem
-                {
-                    ProductId = item.ProductId,
-                    Quantity = item.Quantity,
-                    PriceAtOrder = (decimal)product.Price
-                };
-                orderItems.Add(orderItem);
-                total += orderItem.PriceAtOrder * orderItem.Quantity;
-            }
-            
-            var order = _orderMapper.MapCreateDTOToOrder(orderDto, userId, orderItems, total);
-            await _context.Orders.InsertOneAsync(order);
-
-            // Update user's order list
-            var update = Builders<User>.Update.Push(u => u.OrderIds, order.Id);
-            await _context.Users.UpdateOneAsync(u => u.Id == order.UserId, update);
-
-            var createdOrderDto = _orderMapper.MapToGetOrderDTO(order);
-            return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, createdOrderDto);
+            return CreatedAtAction(nameof(GetOrder), new { id = result.Order!.Id }, result.Order);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<GetOrderDTO>> UpdateOrder(string id, UpdateOrderDTO updateDto)
         {
-            var existingOrder = await _context.Orders.Find(x => x.Id == id).FirstOrDefaultAsync();
-            if (existingOrder == null)
-                return NotFound();
-
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (userId == null)
                 return Unauthorized();
 
-            if (existingOrder.UserId != userId && !User.IsInRole("Admin"))
-                return Forbid();
-
-            // Calculate total amount based on products
-            decimal total = 0;
-            var orderItems = new List<OrderItem>();
-            foreach (var item in updateDto.Items)
+            var result = await _orderService.UpdateOrder(id, updateDto, userId, User.IsInRole("Admin"));
+            if (!result.Success)
             {
-                var product = await _context.Products.Find(x => x.Id == item.ProductId).FirstOrDefaultAsync();
-                if (product == null)
-                    return BadRequest($"Product with ID {item.ProductId} not found");
-
-                var orderItem = new OrderItem
-                {
-                    ProductId = item.ProductId,
-                    Quantity = item.Quantity,
-                    PriceAtOrder = (decimal)product.Price
-                };
-                orderItems.Add(orderItem);
-                total += orderItem.PriceAtOrder * orderItem.Quantity;
+                if (result.ErrorMessage == "Forbidden")
+                    return Forbid();
+                return NotFound(result.ErrorMessage);
             }
 
-            var updatedOrder = _orderMapper.MapUpdateDTOToOrder(id, updateDto, existingOrder, orderItems, total);
-            var result = await _context.Orders.ReplaceOneAsync(x => x.Id == id, updatedOrder);
-            if (result.ModifiedCount == 0)
-                return NotFound();
-
-            var updatedOrderDto = _orderMapper.MapToGetOrderDTO(updatedOrder);
-            return Ok(updatedOrderDto);
+            return Ok(result.Order);
         }
 
         [HttpPut("{id}/status")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateOrderStatus(string id, [FromBody] string status)
         {
-            var update = Builders<Order>.Update.Set(o => o.Status, status);
-            var result = await _context.Orders.UpdateOneAsync(x => x.Id == id, update);
-
-            if (result.ModifiedCount == 0)
-                return NotFound();
+            var result = await _orderService.UpdateOrderStatus(id, status);
+            if (!result.Success)
+                return NotFound(result.ErrorMessage);
 
             return NoContent();
         }
@@ -172,23 +112,17 @@ namespace P06Shop.Api.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteOrder(string id)
         {
-            var order = await _context.Orders.Find(x => x.Id == id).FirstOrDefaultAsync();
-            if (order == null)
-                return NotFound();
-
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (userId == null)
                 return Unauthorized();
 
-            if (order.UserId != userId && !User.IsInRole("Admin"))
-                return Forbid();
-
-            // Remove order ID from user's order list
-            var update = Builders<User>.Update.Pull(u => u.OrderIds, id);
-            await _context.Users.UpdateOneAsync(u => u.Id == order.UserId, update);
-
-            // Delete the order
-            await _context.Orders.DeleteOneAsync(x => x.Id == id);
+            var result = await _orderService.DeleteOrder(id, userId, User.IsInRole("Admin"));
+            if (!result.Success)
+            {
+                if (result.ErrorMessage == "Forbidden")
+                    return Forbid();
+                return NotFound(result.ErrorMessage);
+            }
 
             return NoContent();
         }

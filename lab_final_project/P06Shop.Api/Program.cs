@@ -96,22 +96,14 @@ public class Program
         // Register services
         builder.Services.AddScoped<AuthService>();
         builder.Services.AddScoped<JwtService>();
+        builder.Services.AddScoped<ProductService>();
+        builder.Services.AddScoped<OrderService>();
+        builder.Services.AddScoped<UserService>();
 
         // Register mappers
         builder.Services.AddScoped<IOrderMapper, OrderMapper>();
         builder.Services.AddScoped<IProductMapper, ProductMapper>();
         builder.Services.AddScoped<IUserMapper, UserMapper>();
-
-        // Configure CORS
-        builder.Services.AddCors(options =>
-        {
-            options.AddDefaultPolicy(builder =>
-            {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            });
-        });
 
         var app = builder.Build();
 
@@ -133,7 +125,6 @@ public class Program
         }
 
         app.UseRouting();
-        app.UseCors();
 
         app.UseAuthentication();
         app.UseAuthorization();
