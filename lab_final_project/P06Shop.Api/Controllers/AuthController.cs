@@ -19,7 +19,7 @@ namespace P06Shop.Api.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<AuthResponse>> Login([FromBody] LoginRequest model)
         {
-            var response = await _authService.Login(model.Username, model.Password);
+            var response = await _authService.Login(model.Email, model.Password);
             if (!response.Success)
                 return BadRequest(response);
 

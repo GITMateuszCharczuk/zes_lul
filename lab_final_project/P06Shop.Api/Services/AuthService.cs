@@ -25,9 +25,9 @@ namespace P06Shop.Api.Services
             return BCrypt.Net.BCrypt.HashPassword(password);
         }
 
-        public async Task<AuthResponse> Login(string username, string password)
+        public async Task<AuthResponse> Login(string email, string password)
         {
-            var user = await _context.Users.Find(u => u.Username == username).FirstOrDefaultAsync();
+            var user = await _context.Users.Find(u => u.Email == email).FirstOrDefaultAsync();
             if (user == null)
                 return new AuthResponse { Success = false, Message = "User not found." };
 
