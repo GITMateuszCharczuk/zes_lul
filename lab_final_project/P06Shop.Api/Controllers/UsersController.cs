@@ -10,6 +10,7 @@ using System.Security.Claims;
 
 namespace P06Shop.Api.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -26,7 +27,6 @@ namespace P06Shop.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<GetUsersDTO>> GetUsers()
         {
             try
@@ -65,7 +65,6 @@ namespace P06Shop.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<GetUserDTO>> CreateUser(CreateUserDTO createDto)
         {
             try
@@ -133,7 +132,6 @@ namespace P06Shop.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string id)
         {
             try

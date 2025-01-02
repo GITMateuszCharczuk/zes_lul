@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
 public class ProductsController : ControllerBase
 {
     private readonly MongoDbContext _context;
@@ -112,6 +111,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<GetProductDTO>> UpdateProduct(string id, UpdateProductDTO updateDto)
     {
         try

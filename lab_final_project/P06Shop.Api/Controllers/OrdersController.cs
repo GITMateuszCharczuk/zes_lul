@@ -169,6 +169,7 @@ namespace P06Shop.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteOrder(string id)
         {
             var order = await _context.Orders.Find(x => x.Id == id).FirstOrDefaultAsync();
