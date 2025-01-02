@@ -30,7 +30,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6" component={Link} to="/" sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
-                        Online Shop
+                        Online Shop {user && `(User ID: ${user.userId})`}
                     </Typography>
 
                     {user ? (
@@ -91,8 +91,21 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                 </Toolbar>
             </AppBar>
 
-            <Container component="main" sx={{ flex: 1, py: 3 }}>
-                {children}
+            <Container 
+                component="main" 
+                maxWidth={false}
+                sx={{ 
+                    flex: 1, 
+                    py: 3,
+                    px: { xs: 2, sm: 4 },
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                }}
+            >
+                <Container maxWidth="lg">
+                    {children}
+                </Container>
             </Container>
 
             <Box component="footer" sx={{ py: 3, px: 2, mt: 'auto', backgroundColor: 'primary.main', color: 'white' }}>
