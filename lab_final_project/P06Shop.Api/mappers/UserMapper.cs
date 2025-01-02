@@ -16,6 +16,7 @@ namespace P06Shop.Api.Mappers
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                Role = user.Role,
                 OrderIds = user.OrderIds
             };
         }
