@@ -2,11 +2,9 @@ export interface Product {
     id: string;
     title: string;
     description: string;
-    imageUrl: string;
     barcode: string;
     price: number;
     releaseDate: string;
-    categories: string[];
 }
 
 export interface OrderItem {
