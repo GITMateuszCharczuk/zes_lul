@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  api-web:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - .:/app
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

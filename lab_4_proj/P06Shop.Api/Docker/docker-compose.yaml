@@ -1,0 +1,75 @@
+services:
+  api-gateway:
+    build:
+      context: ../../ApiGateway
+      dockerfile: ./docker/Dockerfile
+    networks:
+      - docker-network
+    ports:
+      - "8000:8000"
+    environment:
+      - SERVICE_PORT=:8000
+      - PRODUCT_SERVICE_URL=http://product-service:8080
+      - REQUEST_SENT_LIMIT=100
+      - REQUEST_SENT_TIME_WINDOW=60
+      - REQUEST_SIZE_LIMIT=10
+      - MAIN_API_ROUTE=/whatever/api
+      - ENV=PROD
+    depends_on:
+      - product-service
+  api-web:
+    build:
+      context: ../../car-rental-admin
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - .:/app
+    networks:
+      - docker-network
+    depends_on:
+      - api-gateway
+  product-service:
+    build:
+      context: ../
+      dockerfile: ./Docker/Dockerfile
+    networks:
+      - docker-network
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - MONGO_DB_CONNECTION_STRING=mongodb://mongo:27017
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:5.0
+    networks:
+      - docker-network
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  mongo-express:
+    image: mongo-express:latest
+    networks:
+      - docker-network
+    container_name: mongo-express
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: password
+
+volumes:
+  mongo_data:
+  
+networks:
+  docker-network:
+    driver: bridge
